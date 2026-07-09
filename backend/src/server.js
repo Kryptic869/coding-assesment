@@ -1,8 +1,9 @@
-require("dotenv").config();
+import dotenv from "dotenv";
+import app from "./app.js";
+import { connectDB } from "./config/database.js";
+import seedDatabase from "./seed/seedDatabase.js";
 
-import { listen } from "./app";
-import { connectDB } from "./config/database";
-import seedDatabase from "./seed/seedDatabase";
+dotenv.config();
 
 const PORT = process.env.PORT || 5000;
 
@@ -10,11 +11,9 @@ const startServer = async () => {
     await connectDB();
     await seedDatabase();
 
-    listen(PORT, () => {
+    app.listen(PORT, () => {
         console.log(`Server is running on port ${PORT}`);
     });
-};
-
-
+};  
 
 startServer();
