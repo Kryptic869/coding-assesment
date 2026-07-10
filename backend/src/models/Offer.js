@@ -103,7 +103,7 @@ const offerSchema = new Schema(
 
         status: {
             type: String,
-            enum: ["active", "expired", "inactive"],
+            enum: ["active", "inactive"],
             default: "active",
         },
 
