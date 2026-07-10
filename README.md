@@ -1,4 +1,4 @@
-# cloudigo-assesment
+# coding-assesment
 
 Undergoing this process was done by first setting up both the frontend and the backend of the project.
 
@@ -6,7 +6,9 @@ this was then followed by the creation and initialisation of the backend, starti
 
 This was followed up by the initialisation and termination functions for the database. `connectDB()` initialises the MongoDB connection (or starts an in-memory MongoDB instance when no connection string is provided), and `disconnectDB()`, which closes the database connection and stops the in-memory database server when applicable.
 
-Then, the database was filled with AI generated seed data by the code in `seedDatabase.js`.
+Then, the database was filled with AI generated seed data by the code in the seeder `seedDatabase.js`.
+
+Afterwards, API routes were created using `Router` from Express.
 
 ## Setup Instructions
 
@@ -19,7 +21,7 @@ This approach keeps the data model more normalised and avoids repeating the same
 ### Offer Schema
 
 The Offer schema stores information about each individual offer, including:
-`title`, `description`, `amountOfUses`, `business`, `category`, `discount`, `redeemableDays`, `locations`, `offerImages`, `expiryDate`, `status`, and `termsAndConditions`.
+`title`, `description`, `amountOfUses`, `businessID`, `category`, `discount`, `redeemableDays`, `locations`, `offerImages`, `expiryDate`, `status`, and `termsAndConditions`.
 
 The `business` field references the Business schema, allowing each offer to be linked to the business that created it.
 
