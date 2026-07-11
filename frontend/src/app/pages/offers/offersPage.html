@@ -1,0 +1,61 @@
+<section class="offers-page">
+  <div class="page-header">
+    <div>
+      <h1>Offers</h1>
+      <p>Manage the offers available on the Cloudigo platform.</p>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <p>Loading offers...</p>
+  } @else if (errorMessage) {
+    <div>
+      <p>{{ errorMessage }}</p>
+
+      <button type="button" (click)="loadOffers()">
+        Try again
+      </button>
+    </div>
+  } @else if (offers.length === 0) {
+    <p>No offers found.</p>
+  } @else {
+    <div class="offers-grid">
+      @for (offer of offers; track offer._id) {
+        <article class="offer-card">
+          <div class="offer-card__header">
+            <div>
+              <p class="business-name">
+                {{ offer.businessId.name }}
+              </p>
+
+              <h2>{{ offer.title }}</h2>
+            </div>
+
+            <span class="status-badge">
+              {{ offer.status }}
+            </span>
+          </div>
+
+          <p>{{ offer.description }}</p>
+
+          <div class="offer-details">
+            <p>
+              <strong>Category:</strong>
+              {{ offer.category }}
+            </p>
+
+            <p>
+              <strong>Uses:</strong>
+              {{ offer.amountOfUses }}
+            </p>
+
+            <p>
+              <strong>Plans:</strong>
+              {{ offer.plan.join(', ') }}
+            </p>
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>
