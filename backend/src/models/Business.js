@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 // Business Schema
-// Name, description, locations, email, phone, logo, website, images
+// Name, description, locations, email, phone, logoUrl, website, images
 const businessSchema = new Schema(
     {
         name: {
@@ -34,7 +34,7 @@ const businessSchema = new Schema(
             match: [/^\+356\s?\d{8}$/, "Please fill a valid phone number in the format +356 ********"]
         },
 
-        logo: {
+        logoUrl: {
             type: String,
             required: [true, "Business logo URL is required"],
         },

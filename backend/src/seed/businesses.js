@@ -9,7 +9,7 @@ export default [
         ],
         email: "info@theolivegrove.mt",
         phone: "+356 21234567",
-        logo: "https://example.com/images/the-olive-grove-logo.png",
+        logoUrl: "https://example.com/images/the-olive-grove-logo.png",
         website: "https://www.theolivegrove.mt",
         images: [
             "https://example.com/images/olive-grove-interior.jpg",
@@ -27,7 +27,7 @@ export default [
         ],
         email: "sales@techsphere.mt",
         phone: "+356 21345678",
-        logo: "https://example.com/images/techsphere-logo.png",
+        logoUrl: "https://example.com/images/techsphere-logo.png",
         website: "https://www.techsphere.mt",
         images: [
             "https://example.com/images/techsphere-store.jpg",
@@ -45,7 +45,7 @@ export default [
         ],
         email: "hello@activelife.mt",
         phone: "+356 21456789",
-        logo: "https://example.com/images/activelife-logo.png",
+        logoUrl: "https://example.com/images/activelife-logo.png",
         website: "https://www.activelife.mt",
         images: [
             "https://example.com/images/activelife-gym.jpg",
