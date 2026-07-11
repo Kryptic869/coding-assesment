@@ -20,17 +20,18 @@ const getOffers = async (req, res) => {
 
 const createOffer = async (req, res) => {
     try {
-        const newOffer = new Offer(req.body);
-        const savedOffer = await newOffer.save();
+        const newOffer = await Offer.create(req.body);
+
         res.status(201).json({
             success: true,
-            data: savedOffer,
+            message: "Offer created successfully",
+            data: newOffer,
         });
     }
     catch (error) {
         res.status(400).json({
             success: false,
-            message: "Failed to create offer",
+            message: error.message,
         });
     }
 };
@@ -46,13 +47,17 @@ const toggleOfferStatus = async (req, res) => {
                 message: "Offer not found",
             });
         }
+        const previousStatus = offer.status;
 
         // Toggle the status between "active" and "inactive"
         offer.status = offer.status === "active" ? "inactive" : "active";
         const updatedOffer = await offer.save();
 
+        const newStatus = updatedOffer.status;
+
         res.status(200).json({
             success: true,
+            message: `Offer status changed from ${previousStatus} to ${newStatus}`,
             data: updatedOffer,
         });
     }
