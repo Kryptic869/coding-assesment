@@ -27,7 +27,7 @@ export const offerValidationRules = [
         .withMessage("Amount of uses must be a positive integer")
         .toInt(),
 
-    body("business")
+    body("businessId")
         .notEmpty()
         .withMessage("Business ID is required")
         .bail()
