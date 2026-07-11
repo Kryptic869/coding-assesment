@@ -56,7 +56,7 @@ const offerSchema = new Schema(
         },
 
         plan: {
-            type: String,
+            type: [String],
             required: [true, "Offer plan is required"],
             enum: ["basic", "premium", "enterprise"],
         },
@@ -86,7 +86,6 @@ const offerSchema = new Schema(
         locations: {
             type: [String],
             required: [true, "Offer locations are required"],
-            default: [],
         },
 
         offerImages: [
