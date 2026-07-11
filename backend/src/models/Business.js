@@ -1,7 +1,7 @@
 import { Schema, model } from 'mongoose';
 
 // Business Schema
-// Name, description, locations, email, phone, logoUrl, website, images
+// Name, description, category, locations, email, phone, logoUrl, website, images
 const businessSchema = new Schema(
     {
         name: {
@@ -14,6 +14,40 @@ const businessSchema = new Schema(
             type: String,
             required: [true, "Business description is required"],
             maxlength: [700, "Business description cannot exceed 700 characters"]
+        },
+
+        category: {
+            type: [
+                {
+                    type: String,
+                    enum: {
+                        values: [
+                            "food & beverage",
+                            "fashion & apparel",
+                            "electronics & gadgets",
+                            "health & wellness",
+                            "travel & tourism",
+                            "entertainment & leisure",
+                            "home & garden",
+                            "sports & fitness",
+                            "automotive & transportation",
+                            "education & learning",
+                            "beauty & personal care",
+                            "finance & insurance"
+                        ],
+                        message: "Invalid business category"
+                    },
+                },
+            ],
+            required: [true, "Business category is required"],
+            // Custom validator to ensure at least one category is provided
+            // This does not allow for an empty array
+            validate: {
+                validator: function (value) {
+                    return Array.isArray(value) && value.length > 0;
+                },
+                message: "Business category must contain at least one category"
+            }
         },
 
         locations: {

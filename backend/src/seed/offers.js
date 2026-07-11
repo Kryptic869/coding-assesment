@@ -5,7 +5,7 @@ export default (businesses) => [
             "Enjoy a delicious Mediterranean dinner with a 20% discount on your total bill. Perfect for couples, families, and groups looking for a quality dining experience.",
         amountOfUses: 1,
         businessId: businesses[0]._id,
-        category: "food & beverage",
+        category: ["food & beverage"],
         discount: 20,
         plan: "premium",
         redeemableDays: [
@@ -34,7 +34,7 @@ export default (businesses) => [
             "Get a discounted weekend brunch experience including a selection of pastries, beverages, and Mediterranean-inspired dishes.",
         amountOfUses: 2,
         businessId: businesses[0]._id,
-        category: "food & beverage",
+        category: ["food & beverage"],
         discount: 15,
         plan: "basic",
         redeemableDays: [
@@ -59,7 +59,7 @@ export default (businesses) => [
             "Upgrade your smartphone and receive 25% off selected accessories including cases, chargers, and wireless headphones.",
         amountOfUses: 1,
         businessId: businesses[1]._id,
-        category: "electronics & gadgets",
+        category: ["electronics & gadgets"],
         discount: 25,
         plan: "premium",
         redeemableDays: [
@@ -90,7 +90,7 @@ export default (businesses) => [
             "Save 30% when purchasing selected gaming accessories including keyboards, mice, and headsets.",
         amountOfUses: 1,
         businessId: businesses[1]._id,
-        category: "electronics & gadgets",
+        category: ["electronics & gadgets"],
         discount: 30,
         plan: "enterprise",
         redeemableDays: [
@@ -116,7 +116,7 @@ export default (businesses) => [
             "Join ActiveLife Fitness Club with a 40% discount on your first three months of membership.",
         amountOfUses: 1,
         businessId: businesses[2]._id,
-        category: "sports & fitness",
+        category: ["sports & fitness"],
         discount: 40,
         plan: "premium",
         redeemableDays: [
@@ -145,7 +145,7 @@ export default (businesses) => [
             "Receive a discounted personal training package with certified fitness coaches.",
         amountOfUses: 3,
         businessId: businesses[2]._id,
-        category: "health & wellness",
+        category: ["health & wellness"],
         discount: 35,
         plan: "basic",
         redeemableDays: [
@@ -171,7 +171,7 @@ export default (businesses) => [
             "Take part in a summer fitness challenge and receive exclusive membership benefits.",
         amountOfUses: 1,
         businessId: businesses[2]._id,
-        category: "sports & fitness",
+        category: ["sports & fitness"],
         discount: 50,
         plan: "enterprise",
         redeemableDays: [

@@ -3,6 +3,7 @@ export default [
         name: "The Olive Grove Bistro",
         description:
             "A modern Mediterranean restaurant offering fresh local ingredients, handcrafted dishes, and a relaxing dining experience inspired by Maltese cuisine.",
+        category:["food & beverage"],
         locations: [
             "Bugibba",
             "Sliema"
@@ -21,6 +22,7 @@ export default [
         name: "TechSphere Malta",
         description:
             "A leading electronics retailer specialising in smartphones, laptops, gaming accessories, and smart home technology from leading brands.",
+        category: ["electronics & gadgets"],
         locations: [
             "Valletta",
             "Mosta"
@@ -39,6 +41,7 @@ export default [
         name: "ActiveLife Fitness Club",
         description:
             "A premium fitness centre providing modern gym facilities, personal training, group classes, and wellness programmes for all fitness levels.",
+        category: ["health & wellness", "sports & fitness"],
         locations: [
             "St Julian's",
             "Mellieha"

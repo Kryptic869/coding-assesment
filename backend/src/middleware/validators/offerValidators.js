@@ -47,6 +47,21 @@ export const offerValidationRules = [
         .notEmpty()
         .withMessage("Offer category is required")
         .bail()
+        .isArray({ min: 1 })
+        .withMessage("Offer category must be an array with at least one category")
+        .bail()
+        // Custom validator to ensure no duplicate values in the array
+        .custom((categories) => {
+            if (new Set(categories).size !== categories.length) {
+                throw new Error("Offer category cannot contain duplicate values");
+            }
+            return true;
+        }),
+
+    body("category.*")
+        .isString()
+        .withMessage("Each offer category must be a string")
+        .bail()
         .isIn([
             "food & beverage",
             "fashion & apparel",

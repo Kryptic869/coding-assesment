@@ -30,22 +30,37 @@ const offerSchema = new Schema(
         },
 
         category: {
-            type: String,
-            required: [true, "Offer category is required"],
-            enum: [
-                "food & beverage",
-                "fashion & apparel",
-                "electronics & gadgets",
-                "health & wellness",
-                "travel & tourism",
-                "entertainment & leisure",
-                "home & garden",
-                "sports & fitness",
-                "automotive & transportation",
-                "education & learning",
-                "beauty & personal care",
-                "finance & insurance"
+            type: [
+                {
+                    type: String,
+                    enum: {
+                        values: [
+                            "food & beverage",
+                            "fashion & apparel",
+                            "electronics & gadgets",
+                            "health & wellness",
+                            "travel & tourism",
+                            "entertainment & leisure",
+                            "home & garden",
+                            "sports & fitness",
+                            "automotive & transportation",
+                            "education & learning",
+                            "beauty & personal care",
+                            "finance & insurance"
+                        ],
+                        message: "Invalid offer category"
+                    },
+                },
             ],
+            required: [true, "Offer category is required"],
+            // Custom validator to ensure at least one category is provided
+            // This does not allow for an empty array
+            validate: {
+                validator: function (value) {
+                    return Array.isArray(value) && value.length > 0;
+                },
+                message: "Offer category must contain at least one category"
+            }
         },
 
         discount: {
