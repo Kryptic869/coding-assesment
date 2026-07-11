@@ -56,9 +56,24 @@ const offerSchema = new Schema(
         },
 
         plan: {
-            type: [String],
+            type: [
+                {
+                    type: String,
+                    enum: {
+                        values: ["basic", "premium", "enterprise"],
+                        message: "Plan must be either 'basic', 'premium', or 'enterprise'"
+                    },
+                },
+            ],
             required: [true, "Offer plan is required"],
-            enum: ["basic", "premium", "enterprise"],
+            // Custom validator to ensure at least one plan type is provided
+            // This does not allow for an empty array
+            validate: {
+                validator: function (value) {
+                    return Array.isArray(value) && value.length > 0;
+                },
+                message: "Offer plan must contain at least one plan type"
+            }
         },
 
         redeemableDays: {
