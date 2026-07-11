@@ -3,7 +3,9 @@ import Offer from "../models/Offer.js";
 // Controller to get all offers
 const getOffers = async (req, res) => {
     try {
-        const offers = await Offer.find().sort({ createdAt: -1 });
+        const offers = await Offer.find()
+            .populate("business")
+            .sort({ createdAt: -1 });
         res.status(200).json({
             success: true,
             count: offers.length,
