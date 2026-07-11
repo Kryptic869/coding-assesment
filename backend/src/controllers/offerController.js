@@ -4,7 +4,7 @@ import Offer from "../models/Offer.js";
 const getOffers = async (req, res) => {
     try {
         const offers = await Offer.find()
-            .populate("business")
+            .populate("businessId")
             .sort({ createdAt: -1 });
         res.status(200).json({
             success: true,
