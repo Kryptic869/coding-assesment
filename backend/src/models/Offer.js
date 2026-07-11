@@ -1,7 +1,7 @@
 import { Schema, model, Types } from 'mongoose';
 
 // Offer Schema
-// Title, description, amountOfUses, businessID, category, discount, plan, redeemableDays, locations, offerImages, expiryDate, status, termsAndConditions
+// Title, description, amountOfUses, business, category, discount, plan, redeemableDays, locations, offerImages, expiryDate, status, termsAndConditions
 const offerSchema = new Schema(
     {
         title: {
@@ -23,10 +23,10 @@ const offerSchema = new Schema(
             min: [1, "Amount of uses cannot be less than 1"],
         },
 
-        businessID: {
+        business: {
             type: Types.ObjectId,
             ref: "Business",
-            required: [true, "Business ID is required"],
+            required: [true, "Business is required"],
         },
 
         category: {
