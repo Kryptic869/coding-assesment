@@ -1,11 +1,9 @@
 import express from "express";
 
+import { getBusinesses } from "../controllers/businessController.js";
+
 const router = express.Router();
 
-router.get("/", (req, res) => {
-    res.json({
-        message: "Businesses endpoint works!",
-    });
-});
+router.get("/", getBusinesses);
 
 export default router;
