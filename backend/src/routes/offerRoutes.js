@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get("/", getOffers);
 
-router.post("/", createOfferValidator, validateRequest, createOfResfer);
+router.post("/", createOfferValidator, validateRequest, createOffer);
 
 router.patch("/:id/status", toggleOfferStatus);
 
