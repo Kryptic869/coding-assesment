@@ -35,7 +35,7 @@ Undergoing this process involved first setting up both the frontend and the back
 - [Future Work](#future-work)
   - [Location Links for Businesses](#locations-links-for-businesses)
   - [Linking Offer Categories with Business Categories](#linking-offer-categories-with-business-categories)
-  - [Expiry Date Allowance](#expiry-date-allowance)
+  - [User Interface Error Handling](#user-interface-error-handling)
   - [Search, Filtering and Pagination for Offers](#search-filtering-and-pagination-for-offers)
 - [AI Tool Usage](#ai-tool-usage)
   - [Seed Generation](#seed-generation)
@@ -319,9 +319,9 @@ An all locations button to select all locations of a business.
 
 When a business is adding a new category, only categories which the business has added beforehand are shown as an option; if they would like to add one, they would need to edit business settings.
 
-### Expiry Date allowance
+### User Interface Error Handling
 
-The expiry date would allow the business to not add an expiry date so that the offer would be there until edited again by the business.
+If a new offer fails, a generic `Unable to create the offer` error message is shown to the user. Ideally, this would be more intuitive and it would let the user know where they have made a mistake, taking the answer from the backend's reply.
 
 ### Search, Filtering and Pagination for Offers
 
