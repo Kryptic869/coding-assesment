@@ -131,6 +131,7 @@ export const offerValidationRules = [
 
     // Expiry date validation: must be a valid date in the future
     body("expiryDate")
+        .optional({ values: "falsy" }) // Allow empty values to be treated as optional
         .isISO8601()
         .toDate()
         .custom((value) => {

@@ -177,15 +177,6 @@
         type="date"
         formControlName="expiryDate"
       />
-
-      @if (
-        offerForm.controls.expiryDate.touched &&
-        offerForm.controls.expiryDate.invalid
-      ) {
-        <p class="field-error">
-          Expiry date is required.
-        </p>
-      }
     </div>
 
     <!-- Categories -->

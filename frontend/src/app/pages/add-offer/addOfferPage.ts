@@ -84,7 +84,7 @@ export class AddOfferPage implements OnInit {
       [] as string[]
     ],
     expiryDate: [
-      Validators.required
+      ''
     ],
     status: [
       'active' as 'active' | 'inactive',
@@ -189,8 +189,18 @@ export class AddOfferPage implements OnInit {
 
     this.changeDetector.markForCheck();
 
+    const {
+      expiryDate,
+      ...offerWithoutExpiryDate
+    } = this.offerForm.getRawValue();
+
+    const payload = {
+      ...offerWithoutExpiryDate,
+      ...(expiryDate ? { expiryDate: new Date(`${expiryDate}T00:00:00`) } : {})
+    };
+
     this.offerService
-      .createOffer(this.offerForm.getRawValue())
+      .createOffer(payload)
       .pipe(
         finalize(() => {
           this.isSubmitting = false;
