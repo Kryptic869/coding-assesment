@@ -1,10 +1,10 @@
 <article class="offer-card">
     <div class="offer-card__image-container">
-        <!-- <img
+        <img
             class="offer-card__image"
             [src]="offer.offerImages?.[0] || offer.business.logoUrl"
-            alt = "offer.title"
-        /> -->
+            alt = "{{ offer.title }}"
+        />
 
         <span
             class="status-badge"
@@ -37,11 +37,6 @@
     </div>
 
     <div class="offer-meta">
-      <!-- <p>
-        <strong>Category:</strong>
-        {{ offer.category.join(', ') }}
-      </p> -->
-
       <p>
         <strong>Plans:</strong>
         {{ offer.plan.join(', ') }}
