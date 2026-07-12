@@ -19,6 +19,7 @@ Undergoing this process involved first setting up both the frontend and the back
   - [Models](#models-1)
   - [Database](#database)
   - [Seed](#seed-ai)
+  - [Static Assets](#static-assets)
 - [Setup Instructions](#setup-instructions)
   - [Requirements](#requirements)
   - [Installation](#installation)
@@ -38,6 +39,7 @@ Undergoing this process involved first setting up both the frontend and the back
   - [Search, Filtering and Pagination for Offers](#search-filtering-and-pagination-for-offers)
 - [AI Tool Usage](#ai-tool-usage)
   - [Seed Generation](#seed-generation)
+  - [AI-Generated Assets](#ai-generated-assets)
   - [Plan and Server-Side Schema Validation](#plan---server--schema-validation-question)
   - [Learning Angular Concepts](#learning-angular-concepts)
   - [Debugging Angular Change Detection](#debugging-angular-change-detection)
@@ -162,6 +164,14 @@ The database utilities are responsible for establishing and closing the MongoDB 
 
 The seeding utilities populate the database with example businesses and offers whenever the database starts empty, ensuring the application is immediately usable without manual setup.
 
+### Static Assets
+
+Seeded business and offer images are stored under `backend/public/images`. Express exposes this directory through the `/images` route, allowing the
+frontend to display images using the URLs returned by the API.
+
+This approach keeps the assessment self-contained and avoids requiring an
+external image-storage service.
+
 ## Setup Instructions
 
 ### Requirements
@@ -282,11 +292,15 @@ An offer may belong to more than one membership plan; therefore, the `plan` fiel
 
 ### Business Images vs Offer Images
 
-From the assessment brief and time taken to look around the app, it appeared that businesses share the same branding across multiple offers. To support this, each business stores default branding and gallery images. Then, individual offers can optionally define additional promotional images.
+From the assessment brief and time taken to look around the app, it appeared that businesses share the same branding across multiple offers. To support this, each business stores default branding and gallery images which can be reused across multiple offers. Then, individual offers may optionally provide offer-specific promotional images and these are given display priority.
+
+For this assesment, seeded images are stored inside the backend's `public/images` directory and exposed as static assets through Express. The API returns image URLs, which the Angular frontend binds to the `src` attribute of image elements.
+
+When an offer does not contain a custom image, the frontend falls back to an image belonging to the associated business, or if that is not available, the frontend falls back to the business logo. In a production environment, these files would likely be stored through a cloud object-storage service or CDN rather than inside the application repository.
 
 ### Business Locations
 
-Locations belong to businesses rather than offers. Each offer inherits the locations of the business that owns it. This currently includes a limitation when offers are specified to certain locations.
+Locations belong to businesses rather than offers. Each offer inherits the locations of the business that owns it.
 
 ### Toggle within OfferCard instead of OffersPage
 
@@ -319,6 +333,8 @@ Several generated snippets were discarded or significantly rewritten when they d
 
 ChatGPT Plus was used for the generation of the seed data for the Mongoose Offer schema since in-memory data does not persist across restarts. This was done using the prompt below. As requested, three businesses and 7 offers matching the structure of the Mongoose schemas were created. The generated data was manually reviewed and modified to ensure consistency with the schema, realistic descriptions, valid categories, and relationships between businesses and offers. This significantly reduced the time required to produce realistic test data, which allowed me to focus on the implementation of the backend.
 
+These businesses and offers were created to demonstrate the application's functionality. Business descriptions, logos, gallery images, and promotional offer images were created specifically for this assesment to provide realistic sample data.
+
 > I am creating an offers application in Node.js, and I have created a schema for businesses and offers offered by those businesses using Mongoose. I would like you to generate seed data for the schemas. Invent 3 businesses and 7 offers.
 > OfferSchema:....
 > BusinessSchema....
@@ -327,6 +343,22 @@ ChatGPT Plus was used for the generation of the seed data for the Mongoose Offer
 <img width="1920" height="1774" alt="Offers Seed" src="https://github.com/user-attachments/assets/2ac01ff4-645f-4e37-a044-1842067e80db" />
 
 Link to chat: [Chat Link](https://chatgpt.com/share/6a500ed3-18d4-83ed-887d-4e0d01a286f9)
+
+### AI-Generated Assets
+
+The logos and promotional images used in the seed data were generated using ChatGPT's image generation capabilities. These assets were created to provide realistic sample data and improve the visual presentation of the application during evaluation.
+
+The generated assets include:
+
+- Business logos
+- Business gallery images
+- Promotional offer images
+
+These images are intended solely as demonstration content for the assessment and are not part of the application's functionality.
+
+insert screenshot here.
+
+Link to chat: [Chat Link](https://chatgpt.com/share/6a5406fb-fac0-83ed-a12d-75cf8083ef5c)
 
 ### Plan - Server & Schema Validation Question
 
