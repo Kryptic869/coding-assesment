@@ -13,9 +13,9 @@ One notable difference from React that I have noticed is Angular's component str
 - `.html` files hold the template
 - `.css` files hold the styling
 
-It is worth noting that ChatGPT Plus was used to help get the flow going for my first time in Angular, asking it questions and exploring Angular functions. More at [Angular Help](#angular-help).
+It is worth noting that ChatGPT Plus was used to help get the flow going for my first time in Angular, asking it questions and exploring Angular functions. More at [Angular Help](#learning-angular-concepts).
 
-Then, once again with the aid of Artificial Intelligence (AI), I created the form needed to create new offers and a navigation bar. The navigation bar was created as a standalone reusable component and was routed to be on top of the `main` parts of the application, so that only the routed pages underneath changed with updates.
+Then, once again with the aid of Artificial Intelligence (AI), I created the form needed to create new offers and a navigation bar. The navigation bar was created as a standalone reusable component and was routed to be on top of the `main` parts of the application, so that only the routed pages underneath changed with updates. More at [Frontend Component and Styling Generation](#frontend-component-and-styling-generation).
 
 Finally, a few hours were dedicated to improving the overall stability of the frontend, as well as making it look professional and nice for the eye.
 
@@ -320,7 +320,7 @@ throw new Error("Invalid offer plan");
 
 Link to chat: [Chat Link](https://chatgpt.com/share/6a524ca1-38e8-83ed-9ab4-b1346181405e)
 
-This method was later also used for the `category` validation. 
+This method was later also used for the `category` validation.
 
 ### Learning Angular Concepts
 
