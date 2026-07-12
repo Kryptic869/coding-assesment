@@ -100,8 +100,14 @@ export class AddOfferPage implements OnInit {
     'fashion & apparel',
     'electronics & gadgets',
     'health & wellness',
-    'entertainment',
-    'travel & leisure'
+    'entertainment & leisure',
+    'travel & tourism',
+    'home & garden',
+    'sports & fitness',
+    'automotive & transportation',
+    'education & learning',
+    'beauty & personal care',
+    'finance & insurance',
   ];
 
   get selectedBusinessLocations(): string[] {
