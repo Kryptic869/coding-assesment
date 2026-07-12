@@ -1,0 +1,55 @@
+<article class="offer-card">
+  <div class="offer-card__header">
+    <div>
+        <h2>{{ offer.title }}</h2>
+
+      <p class="business-name">
+        {{ offer.business.name }}
+      </p>
+      
+    </div>
+
+    <span class="status-badge">
+      <strong>Status:</strong> 
+      {{ offer.status }}
+    </span>
+  </div>
+
+  <button
+    type="button"
+    class="offer-card__edit-button"
+    (click)="toggleStatus()"
+    [disabled]="isUpdating"
+    >
+    @if (isUpdating) {
+      Updating...
+    } @else {
+    {{ offer.status === 'active' ? 'Pause Offer' : 'Activate' }}
+    }
+    </button>
+
+    @if (updateErrorMessage) {
+        <p> {{updateErrorMessage}} </p>
+    }
+
+  <p class="description">
+    {{ offer.description }}
+  </p>
+
+  <div class="offer-details">
+    <p>
+      <strong>Category:</strong>
+      {{ offer.category }}
+    </p>
+
+    <p>
+      <strong>Uses:</strong>
+      {{ offer.amountOfUses }}
+    </p>
+
+    <p>
+      <strong>Plans:</strong>
+      {{ offer.plan.join(', ') }}
+    </p>
+  </div>
+</article>

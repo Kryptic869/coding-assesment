@@ -21,40 +21,16 @@
   } @else {
     <div class="offers-grid">
       @for (offer of offers; track offer._id) {
-        <article class="offer-card">
-          <div class="offer-card__header">
-            <div>
-              <p class="business-name">
-                {{ offer.businessId.name }}
-              </p>
+        <!-- Render the offer card component for each offer
+        [offer] = the child component's @Input property that receives the offer data
+        offer = the current offer object in the loop 
 
-              <h2>{{ offer.title }}</h2>
-            </div>
-
-            <span class="status-badge">
-              {{ offer.status }}
-            </span>
-          </div>
-
-          <p>{{ offer.description }}</p>
-
-          <div class="offer-details">
-            <p>
-              <strong>Category:</strong>
-              {{ offer.category }}
-            </p>
-
-            <p>
-              <strong>Uses:</strong>
-              {{ offer.amountOfUses }}
-            </p>
-
-            <p>
-              <strong>Plans:</strong>
-              {{ offer.plan.join(', ') }}
-            </p>
-          </div>
-        </article>
+        Inputs: []
+        Outputs: () -->
+        
+        <app-offer-card 
+          [offer]="offer"
+        />
       }
     </div>
   }

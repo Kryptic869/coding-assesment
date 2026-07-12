@@ -5,8 +5,8 @@ import { Offer } from "../models/offer.model";
 
 interface ApiResponse<T> {
     success: boolean;
-    data: T;
     message?: string;
+    data: T;
 }
 
 @Injectable({
@@ -24,9 +24,9 @@ export class OfferService {
         return this.http.post<ApiResponse<Offer>>(this.apiUrl, offer);
     }
 
-    toggleOfferStatus(offerId: string): Observable<ApiResponse<Offer>> {
+    toggleOfferStatus(id: string): Observable<ApiResponse<Offer>> {
         return this.http.patch<ApiResponse<Offer>>(
-            `${this.apiUrl}/${offerId}/status`,
+            `${this.apiUrl}/${id}/status`,
             {}
         );
     }
