@@ -1,5 +1,5 @@
 import {body} from "express-validator";
-import Business from "../../models/Business.js";
+import Business from "../models/Business.js";
 
 export const offerValidationRules = [
     body("title")
@@ -29,10 +29,10 @@ export const offerValidationRules = [
 
     body("business")
         .notEmpty()
-        .withMessage("Business ID is required")
+        .withMessage("Business is required")
         .bail()
         .isMongoId()
-        .withMessage("Business ID must be a valid MongoDB ID")
+        .withMessage("Business must be a valid MongoDB ID")
         .bail()
         .custom(async (value) => {
             const business = await Business.findById(value);
@@ -46,6 +46,21 @@ export const offerValidationRules = [
     body("category")
         .notEmpty()
         .withMessage("Offer category is required")
+        .bail()
+        .isArray({ min: 1 })
+        .withMessage("Offer category must be an array with at least one category")
+        .bail()
+        // Custom validator to ensure no duplicate values in the array
+        .custom((categories) => {
+            if (new Set(categories).size !== categories.length) {
+                throw new Error("Offer category cannot contain duplicate values");
+            }
+            return true;
+        }),
+
+    body("category.*")
+        .isString()
+        .withMessage("Each offer category must be a string")
         .bail()
         .isIn([
             "food & beverage",
