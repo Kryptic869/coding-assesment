@@ -10,11 +10,12 @@ export default [
         ],
         email: "info@theolivegrove.mt",
         phone: "+356 21234567",
-        logoUrl: "https://example.com/images/the-olive-grove-logo.png",
+        logoUrl: "http://localhost:5000/images/businesses/olive-grove-logo.png",
         website: "https://www.theolivegrove.mt",
         images: [
-            "https://example.com/images/olive-grove-interior.jpg",
-            "https://example.com/images/olive-grove-food.jpg"
+            "http://localhost:5000/images/businesses-gallery/olive-grove-1.png",
+            "http://localhost:5000/images/businesses-gallery/olive-grove-2.png",
+            "http://localhost:5000/images/businesses-gallery/olive-grove-3.png"
         ]
     },
 
@@ -29,11 +30,12 @@ export default [
         ],
         email: "sales@techsphere.mt",
         phone: "+356 21345678",
-        logoUrl: "https://example.com/images/techsphere-logo.png",
+        logoUrl: "http://localhost:5000/images/businesses/techsphere-logo.png",
         website: "https://www.techsphere.mt",
         images: [
-            "https://example.com/images/techsphere-store.jpg",
-            "https://example.com/images/techsphere-products.jpg"
+            "http://localhost:5000/images/businesses-gallery/techsphere-1.png",
+            "http://localhost:5000/images/businesses-gallery/techsphere-2.png",
+            "http://localhost:5000/images/businesses-gallery/techsphere-3.png"
         ]
     },
 
@@ -48,11 +50,12 @@ export default [
         ],
         email: "hello@activelife.mt",
         phone: "+356 21456789",
-        logoUrl: "https://example.com/images/activelife-logo.png",
+        logoUrl: "http://localhost:5000/images/businesses/activelife-logo.png",
         website: "https://www.activelife.mt",
         images: [
-            "https://example.com/images/activelife-gym.jpg",
-            "https://example.com/images/activelife-training.jpg"
+            "http://localhost:5000/images/businesses-gallery/activelife-1.png",
+            "http://localhost:5000/images/businesses-gallery/activelife-2.png",
+            "http://localhost:5000/images/businesses-gallery/activelife-3.png"
         ]
     }
 ];

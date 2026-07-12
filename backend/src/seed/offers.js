@@ -20,7 +20,7 @@ export default (businesses) => [
             "Sliema"
         ],
         offerImages: [
-            "https://example.com/images/olive-dinner-offer.jpg"
+            "http://localhost:5000/images/offers/mediterranean-dinner.png"
         ],
         expiryDate: new Date("2026-12-31"),
         status: "active",
@@ -102,7 +102,7 @@ export default (businesses) => [
             "Mosta"
         ],
         offerImages: [
-            "https://example.com/images/gaming-bundle.jpg"
+            "http://localhost:5000/images/offers/gaming-bundle.png"
         ],
         expiryDate: new Date("2026-08-15"),
         status: "active",
@@ -131,7 +131,7 @@ export default (businesses) => [
             "Mellieha"
         ],
         offerImages: [
-            "https://example.com/images/gym-membership.jpg"
+            "http://localhost:5000/images/offers/gym-membership.png"
         ],
         expiryDate: new Date("2026-11-30"),
         status: "active",
