@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { Offer } from "../models/offer.model";
+import { CreateOfferRequest, Offer } from "../models/offer.model";
 
 interface ApiResponse<T> {
     success: boolean;
@@ -20,7 +20,7 @@ export class OfferService {
         return this.http.get<ApiResponse<Offer[]>>(this.apiUrl);
     }
 
-    createOffer(offer: Partial<Offer>): Observable<ApiResponse<Offer>> {
+    createOffer(offer: CreateOfferRequest): Observable<ApiResponse<Offer>> {
         return this.http.post<ApiResponse<Offer>>(this.apiUrl, offer);
     }
 

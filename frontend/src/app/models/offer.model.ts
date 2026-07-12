@@ -8,7 +8,7 @@ export interface Offer {
     business: Business;
     category: string[];
     discount: number;
-    plan: Array<"basic" | "premium" | "enterprise">;
+    plan: string[];
     redeemableDays?: string[];
     locations: string[];
     offerImages?: string[];
@@ -17,4 +17,19 @@ export interface Offer {
     termsAndConditions: string;
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface CreateOfferRequest {
+    title: string;
+    description: string;
+    amountOfUses?: number;
+    business: string; // Business ID
+    category: string[];
+    discount: number;
+    plan: string[];
+    redeemableDays?: string[];
+    locations: string[];
+    offerImages?: string[];
+    expiryDate?: Date;
+    termsAndConditions: string;
 }

@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, inject } from '@angular/core';
+import { finalize } from 'rxjs';
 
 import { Offer } from '../../models/offer.model';
 import { OfferService } from '../../services/offer.service';
@@ -31,16 +32,21 @@ export class OffersPage implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
-    this.offerService.getOffers().subscribe({
+    this.offerService
+    .getOffers()
+    .pipe(
+        finalize(() => {
+            this.isLoading = false;
+        })
+    )
+    .subscribe({
       next: (response) => {
         this.offers = response.data;
-        this.isLoading = false;
       },
       error: (error) => {
         console.error('Failed to load offers:', error);
 
         this.errorMessage = 'Unable to load offers. Please try again.';
-        this.isLoading = false;
       }
     });
   }
