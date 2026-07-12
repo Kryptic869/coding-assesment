@@ -13,11 +13,11 @@ One notable difference from React that I have noticed is Angular's component str
 - `.html` files hold the template
 - `.css` files hold the styling
 
-It is worth noting that ChatGPT Plus was used to help get the flow going for my first time in angular, asking it questions and exploring Angular functions. More at [Angular Help](#angular-help).
+It is worth noting that ChatGPT Plus was used to help get the flow going for my first time in Angular, asking it questions and exploring Angular functions. More at [Angular Help](#angular-help).
 
 Then, once again with the aid of Artificial Intelligence (AI), I created the form needed to create new offers and a navigation bar. The navigation bar was created as a standalone reusable component and was routed to be on top of the `main` parts of the application, so that only the routed pages underneath changed with updates.
 
-Finally, a few hours were dedicated in improving the overall stability of the frontend, as well as making it look professional and nice for the eye.
+Finally, a few hours were dedicated to improving the overall stability of the frontend, as well as making it look professional and nice for the eye.
 
 ## Frontend Architecture
 
@@ -242,11 +242,11 @@ An offer may belong to more than one membership plan; therefore, the `plan` fiel
 
 ### Business Images vs Offer Images
 
-From the assesment brief and time taken to look around the app, it appeared that businesses share the same branding across multiple offers. To support this, each business stores default branding and gallery images. Then, individual offers can optionally define additional promotional images.
+From the assessment brief and time taken to look around the app, it appeared that businesses share the same branding across multiple offers. To support this, each business stores default branding and gallery images. Then, individual offers can optionally define additional promotional images.
 
 ### Business Locations
 
-Locations belong to businesses rather than offers. Each offer inherits the locations of the business that owns it. This currently introudes a limitation when offers are specified to certain locations.
+Locations belong to businesses rather than offers. Each offer inherits the locations of the business that owns it. This currently includes a limitation when offers are specified to certain locations.
 
 ### Toggle within OfferCard instead of OffersPage
 
@@ -261,7 +261,7 @@ Locations could also be a new Schema on its own, which would then be shared amon
 
 ### Linking Offer Categories with Business Categories
 
-When a business is adding a new category, only categories which the business has added beforehand are shown as an option, if they would like to add one, they would need to edit business settings.
+When a business is adding a new category, only categories which the business has added beforehand are shown as an option; if they would like to add one, they would need to edit business settings.
 
 ### Expiry Date allowance
 
@@ -269,7 +269,7 @@ The expiry date would allow the business to not add an expiry date so that the o
 
 ### Search, Filtering and Pagination for Offers
 
-As the number of offer grows, the frontend should support searching, filtering by category or business, and pagination. These features would improve usability and reduce the amount of data transferred in each reaquest.
+As the number of offers grows, the frontend should support searching, filtering by category or business, and pagination. These features would improve usability and reduce the amount of data transferred in each request.
 
 ## AI Tool Usage
 
@@ -277,21 +277,22 @@ Several generated snippets were discarded or significantly rewritten when they d
 
 ### Seed Generation
 
-ChatGPT Plus was used for the generation of the seed data for the Mongoose Offer schema since in-memory data does not persist across restarts. This was done using the below prompt. As requested, three businesses and 7 offers matching the structure of the Mongoose schemas were created. The generated data was manually reviewed and modified to ensure consistency with the schema, realistic descriptions, valid categories, and relationships between businesses and offers. This significantly reduced the time required to produce realistic test data, which allowed me to focus on the implementation of the backend.
+ChatGPT Plus was used for the generation of the seed data for the Mongoose Offer schema since in-memory data does not persist across restarts. This was done using the prompt below. As requested, three businesses and 7 offers matching the structure of the Mongoose schemas were created. The generated data was manually reviewed and modified to ensure consistency with the schema, realistic descriptions, valid categories, and relationships between businesses and offers. This significantly reduced the time required to produce realistic test data, which allowed me to focus on the implementation of the backend.
 
 > I am creating an offers application in Node.js, and I have created a schema for businesses and offers offered by those businesses using Mongoose. I would like you to generate seed data for the schemas. Invent 3 businesses and 7 offers.
 > OfferSchema:....
 > BusinessSchema....
 
-Insert 2 screenshots here:
+<img width="1920" height="2467" alt="Business Seed" src="https://github.com/user-attachments/assets/82bcd886-5420-439c-b45b-707b71bd0389" />
+<img width="1920" height="1774" alt="Offers Seed" src="https://github.com/user-attachments/assets/2ac01ff4-645f-4e37-a044-1842067e80db" />
 
 Link to chat: [Chat Link](https://chatgpt.com/share/6a500ed3-18d4-83ed-887d-4e0d01a286f9)
 
 ### Plan - Server & Schema Validation Question
 
-After going over the validation of the offers, looking side by side at the offer schema and the server side validation, I noticed that the `plan` attribute was not matching but I was not sure why. The code I had done on the server side validation accepted either a string, or an array of strings, whilst the database only accepted an array of strings. After countless manual tests, this was still not breaking, and therefore I turned to ChatGPT Plus with the below prompt.
+After going over the validation of the offers, looking side by side at the offer schema and the server-side validation, I noticed that the `plan` attribute was not matching, but I was not sure why. The code I had done on the server-side validation accepted either a string or an array of strings, whilst the database only accepted an array of strings. After countless manual tests, this was still not breaking, and therefore I turned to ChatGPT Plus with the below prompt.
 
-I understood that `body("plan")` and the newly learned `body("plan.*")` were used for different reasons. It allows the user to enforce validation rules on every element within an array, in this case for the `plan` array. However, if an array is empty, `plan.*` has nothing to validate, which is why the separate `.isArray({ min: 1 })` check is necessary. This was then used also for `category`, inorder to make sure that all elements within the array are `string` and are one of the predefined categories. Without the wildcard `.*`, one would be able to insert numbers within the array, and any other type of string which would not be accepted by the backend's enum. This is because standard `body()` checks only make sure that the value is an array, and does not check what is inside.
+I understood that `body("plan")` and the newly learned `body("plan.*")` were used for different reasons. It allows the user to enforce validation rules on every element within an array, in this case for the `plan` array. However, if an array is empty, `plan.*` has nothing to validate, which is why the separate `.isArray({ min: 1 })` check is necessary. This was then also used for `category`, in order to make sure that all elements within the array are `string` and are one of the predefined categories. Without the wildcard `.*`, one would be able to insert numbers within the array, and any other type of string, which would not be accepted by the backend's enum. This is because standard `body()` checks only make sure that the value is an array, and does not check what is inside.
 
 This highlighted the difference between validating an array and validating each individual element of an array. This resulted in stronger server-side validation and prevented invalid values from reaching the database.
 
@@ -314,9 +315,12 @@ if (typeof value === 'string' || Array.isArray(value))
 throw new Error("Invalid offer plan");
 }),
 
-Insert 2 screenshots here:
+<img width="1920" height="1257" alt="Plan Server Validation" src="https://github.com/user-attachments/assets/d7a7abe2-10f3-428a-aa54-2c32cf2eb66a" />
+<img width="1920" height="1257" alt="Plan DB Validation" src="https://github.com/user-attachments/assets/e3597a55-c25a-4949-8232-b5722a205e84" />
 
 Link to chat: [Chat Link](https://chatgpt.com/share/6a524ca1-38e8-83ed-9ab4-b1346181405e)
+
+This method was later also used for the `category` validation. 
 
 ### Learning Angular Concepts
 
@@ -324,12 +328,12 @@ This was my first project developed using Angular, and when getting started with
 
 ### Debugging Angular Change Detection
 
-ChatGPT was also used to debug why, after pressing the change status button in the UI, it was not updating automatically. After multiple attempts,`finalize` and `ChangeDetectorRef` were recommended and implemented. After the implementation of `finalize`, the problem persisted; however it was later fixed with the introduction of `ChangeDetectorRef`, which led to the page responding as intended.
+ChatGPT was also used to debug why, after pressing the change status button in the UI, it was not updating automatically. After multiple attempts,`finalize` and `ChangeDetectorRef` were recommended and implemented. After the implementation of `finalize`, the problem persisted; however, it was later fixed with the introduction of `ChangeDetectorRef`, which led to the page responding as intended.
 
-It is worth noting that before these implementations, the backend was returning the updated offer correctly; however, it was just the UI which wasn't reflecting the changes immediately and required a manual refresh. This is why calling markForCheck() explicitly notified Angular that the component's state has changed and that it should be checked during the next change detection cycle.
+It is worth noting that before these implementations, the backend was returning the updated offer correctly; however, it was just the UI which wasn't reflecting the changes immediately and required a manual refresh. This is why calling markForCheck() explicitly notified Angular that the component's state had changed and that it should be checked during the next change detection cycle.
 
 ### Frontend Component and Styling Generation
 
-Due to time constraints, ChatGPT was also used to create the `offerCard.html`, `offerCard.css`, `navbar.css`, `addOfferPage.ts`, `addOfferPage.html`, `addOfferPage.css`, and `offersPage.css`. Although these were mostly copy-pasted, then debugging bugs, more work on them was done on my own, to make it look as professional as possible.
+Due to time constraints, ChatGPT was also used to create the `offerCard.html`, `offerCard.css`, `navbar.css`, `addOfferPage.ts`, `addOfferPage.html`, `addOfferPage.css`, and `offersPage.css`. Although these were mostly copy-pasted and then debugging bugs, more work on them was done on my own to make it look as professional as possible.
 
 It is worth noting that it is my first time working with plain HTML and CSS, as we usually used to use libraries for assignments within React. I did not opt for a library as I thought this would be simpler; instead of looking and researching for a library, I was heavily mistaken.
