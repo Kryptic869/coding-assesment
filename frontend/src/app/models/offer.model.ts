@@ -5,7 +5,7 @@ export interface Offer {
     title: string;
     description: string;
     amountOfUses?: number;
-    businessId: Business;
+    business: Business;
     category: string[];
     discount: number;
     plan: Array<"basic" | "premium" | "enterprise">;
