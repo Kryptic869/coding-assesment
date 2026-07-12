@@ -3,9 +3,9 @@
 This project is a full-stack offers management application developed as part of a technical assessment. The backend exposes a REST API built with Express and MongoDB, while the frontend is implemented in Angular.
 Undergoing this process involved first setting up both the frontend and the backend of the project, within the same directory.
 
-## Frontend Architecture
+## Frontend Development
 
-Development of the frontend began with creating the TypeScript interfaces (models), followed by the application services responsible for communicating with the backend. Once the service layer was complete, the `offersPage` component (page) was developed to display the list of available offers. This was then followed by the implementation of the `offerCard` reusable component, to have all offers within the same card layout and be reused per offer. The GET endpoint would be called by the parent `offersPage` which would then call the component `offerCard`, which accepts an offer via the `@Input` property. Finally, the implementation of `addOfferPage` took place, which provides users with a form to create new offers.
+Development of the frontend began with creating the TypeScript interfaces (models), followed by the application services responsible for communicating with the backend. Once the service layer was complete, the `offersPage` component (page) was developed to display the list of available offers. This was then followed by the implementation of the `offerCard` reusable component, to have all offers within the same card layout and be reused per offer. The `offersPage` calls the GET endpoint through the offers service and stores the returned offers. Its template then renders one reusable `offerCard` component for each offer, passing the corresponding offer through the component's `@Input` property. Finally, the implementation of `addOfferPage` took place, which provides users with a form to create new offers.
 
 One notable difference from React that I have noticed is Angular's component structure. Each component consists of three separate files which are:
 
@@ -13,11 +13,59 @@ One notable difference from React that I have noticed is Angular's component str
 - `.html` files hold the template
 - `.css` files hold the styling
 
-It is worth noting that ChatGPT Plus was used to help get the flow going for my first time in angular, asking it questions and exploring Angular functions.
+It is worth noting that ChatGPT Plus was used to help get the flow going for my first time in angular, asking it questions and exploring Angular functions. More at [Angular Help](#angular-help).
 
-Then once again with the aid of Artificial Intelligence (AI), I created the form needed to create new offers and a navigation bar. The navigation bar was created as a standalone reusable component, and was routed to be on top of the `main` parts of the application, so that only the routed pages underneath change.
+Then once again with the aid of Artificial Intelligence (AI), I created the form needed to create new offers and a navigation bar. The navigation bar was created as a standalone reusable component, and was routed to be on top of the `main` parts of the application, so that only the routed pages underneath changed with updates.
 
 Finally, a few hours were dedicated in improving the overall stability of the frontend, as well as making it look professional and nice for the eye.
+
+## Frontend Architecture
+
+The frontend follows Angular's component-based architecture. Application-specific files are organised inside the `src/app` directory, where responsibilities are separated between pages, reusable components, services and models. The remaining files inside `src` manage application startup, global styling, routing configuration, testing, and server-side rendering.
+
+```
+src/
+├── app/
+│   ├── components/
+│   ├── models/
+│   ├── pages/
+│   ├── services/
+│   ├── app.config.server.ts
+│   ├── app.config.ts
+│   ├── app.css
+│   ├── app.html
+│   ├── app.routes.server.ts
+│   ├── app.routes.ts
+│   ├── app.spec.ts
+│   └── app.ts
+├── index.html
+├── main.server.ts
+├── main.ts
+├── server.ts
+└── styles.css
+```
+
+### Pages
+
+Pages represent complete screens within the application and are responsible for orchestrating data and user interactions.
+
+- `offersPage` retrieves and displays all available offers.
+- `addOfferPage` provides the interface to create new offers.
+
+### Components
+
+Components are reusable UI elementsd shared across the whole application.
+In this case, the `offerCard` component displays a single offer and is reused for every offer returned by the API. it also handles the toggling of the status without requiring the parent page to manage individual offer interactions.
+
+The navigation bar is also implemented as a reusable standalone component, allowing every routed page to share a consistent layout.
+
+### Services
+
+Angular services encapsulate communication with the backend REST API. This keeps HTTP logic separate from presentation logic and allows multiple components to reuse the same functionality.
+
+### Models
+
+TypeScript interfaces define the structure of the application's data, providing strong typing and ensuring consistency between the frontend and backend.
 
 ## Backend & API Integration
 
@@ -33,6 +81,47 @@ Request validation is performed using `express-validator` before requests reach 
 
 Then an extra Business API endpoint was created to return all businesses. Later on, this also became handy in the User Interface (UI), where the list of businesses was needed.
 
+## Backend Architecture
+
+The backend follows a layered architecture in which each file has a single responsibility.
+
+```
+src/
+│
+├── config/
+├── controllers/
+├── models/
+├── routes/
+├── seed/
+├── validators/
+├── app.js
+└── server.js
+```
+
+### Controllers
+
+Controllers contain the application's business logic. They receive validated requests from the routes, interact with the database through the Mongoose models, and return the appropriate HTTP responses.
+
+### Routes
+
+Routes define the available API endpoints and map incoming requests to their respective controller methods. They remain lightweight by delegating validation and business logic elsewhere.
+
+### Validation
+
+Request validation is performed using `express-validator`. Incoming requests are validated before reaching the controllers, ensuring only valid data is processed while providing meaningful error messages for invalid input.
+
+### Models
+
+The models define the MongoDB collections through Mongoose schemas. They also contain field constraints, default values and relationships between documents.
+
+### Database
+
+The database utilities are responsible for establishing and closing the MongoDB connection. If a `MONGODB_URI` is provided, the application connects to that database; otherwise, an in-memory MongoDB instance is automatically created.
+
+### Seed (AI)
+
+The seeding utilities populate the database with example businesses and offers whenever the database starts empty, ensuring the application is immediately usable without manual setup.
+
 ## Setup Instructions
 
 ### Requirements
@@ -45,6 +134,15 @@ Then an extra Business API endpoint was created to return all businesses. Later 
 
 1. Clone the GitHub repository
 2. Install backend dependencies
+   - From root, cd backend
+   - npm install
+3. Install frontend dependencies
+   - From root, cd frontend
+   - npm install
+4. Start the backend
+   - npm run dev
+5. Start the frontend
+   - npm start
 
 ## Data Model Decisions
 
@@ -81,6 +179,8 @@ This classifies the offer into predefined categories. This is not needed to be s
 
 This stores the percentage discount applied by the offer.
 
+The consumer application prominently displays the value of the discount on each offer, therefore a dedicated discount field was included rather than just embedding the information inside the description.
+
 #### `plan`
 
 Stores the membership plans on which the offer is available. The field is an array because I assumed that an offer may belong to multiple plans simultaneously. This is valid for users who are not premium members, who would be able to see the offers without being able to redeem them, enticing them to buy the premium subscription to benefit from those offers.
@@ -99,11 +199,11 @@ This stores URLs of optional images that are specific to an individual offer.
 
 #### `expiryDate`
 
-Specifies when the offer expires. This was done for offers which would be periodic, such as weekly and monthly.
+Specifies when an offer expires. Although not every offer displayed within the consumer application appeared to expire, I inferred that businesses should be able to create time-limited promotions (for example weekend, monthly or seasonal campaigns). Therefore the expiry date was made optional.
 
 #### `status`
 
-This indicates whetherthe offer is active or inactive. This does not and should not be shown to the user. If an offer is active, it is shown to the user, whilst if its not, it does not come up on the users application.
+This indicates whether the offer is active or inactive. Consumers should never see inactive offers. If an offer is active, it is shown to the user, whilst if its not, it does not come up on the users application. This can be used to temporarily hide offers without permanently deleting them.
 
 #### `termsAndConditions`
 
@@ -114,21 +214,7 @@ Stores additional restrictions and redemptions conditions that the users must fo
 The Business schema stores information about each business, including:
 `name`, `description`, `category`, `locations`, `email`, `phone`, `logoUrl`, `website`, and `images`.
 
-This separates business-related information from offer-related information and reduces data duplication.
-
-#### `name`
-
-The name of the business.
-
-#### `description`
-
-A short description about the business, what it does and what it is about.
-
-#### `category`
-
-The categories the business forms part of.
-
-#### `locations`
+This separates business-related information from offer-related information and reduces data duplication when a business creates multiple offers.
 
 ### REST API
 
@@ -187,9 +273,11 @@ As the number of offer grows, the frontend should support searching, filtering b
 
 ## AI Tool Usage
 
+Several generated snippets were discarded or significantly rewritten when they did not align with the existing project structure or coding style. AI suggestions were treated as a starting point rather than copied directly into the project.
+
 ### Seed Generation
 
-ChatGPT Plus was used for the generation of the seed data for the Mongoose Offer schema since in-memory data does not persist across restarts. This was done using the following prompt:
+ChatGPT Plus was used for the generation of the seed data for the Mongoose Offer schema since in-memory data does not persist across restarts. This was done using the below prompt. As requested, three businesses and 7 offers matching the structure of the Mongoose schemas were created. The generated data was manually reviewed and modified to ensure consistency with the schema, realistic descriptions, valid categories, and relationships between businesses and offers. This significantly reduced the time required to produce realistic test data, which allowed me to focus on the implementation of the backend.
 
 > I am creating an offers application in Node.js, and I have created a schema for businesses and offers offered by those businesses using Mongoose. I would like you to generate seed data for the schemas. Invent 3 businesses and 7 offers.
 > OfferSchema:....
@@ -230,12 +318,18 @@ Insert 2 screenshots here:
 
 Link to chat: [Chat Link](https://chatgpt.com/share/6a524ca1-38e8-83ed-9ab4-b1346181405e)
 
-### Angular Help
+### Learning Angular Concepts
 
-Since it was my first time using Angular, when getting to start the frontend, I used ChatGPT to help explain the differences between React and Angular, and also explain the way that angular works.
+This was my first project developed using Angular and when getting to start the frontend, I used ChatGPT to help explain Angular concepts, component communication, routing, dependency injection and the framework's overalll architecture. I also asked for the differences between React and Angular.
 
-ChatGPT was also used to debug why after pressing the change status button on the UI, the UI was not changing. After multiple attempts,`finalize` and `ChangeDetectorRef` were recommended and implemented. After the implementation of `finalize`, the problem still persisted, however it was later fixed with the introduction of `ChangeDetectorRef`, which lead to the page responding as intended. It is worth nothing that before these implementations, the backend was returning the updated offer correctly, however it was just the UI which wasn't reflecting the changes immediately and required a manual refresh. This is why calling markForCheck() explicitly notified Angular that the component's state has changed and that it should be checked during the next change detection cycle.
+### Debugging Angular Change Detection
 
-Due to time constraints, ChatGPT was also used to create the `offerCard.html`, `offerCard.css`, `navbar.css`, `addOfferPage.ts`, `addOfferPage.html`, `addOfferPage.css`, and `offersPage.css`. Although these were mostly copy pasted, then debugging of bugs, more work on them was done on my own, to make it look as professional as possible.
+ChatGPT was also used to debug why, after pressing the change status button in the UI, it was not updating automatically. After multiple attempts,`finalize` and `ChangeDetectorRef` were recommended and implemented. After the implementation of `finalize`, the problem persisted; however it was later fixed with the introduction of `ChangeDetectorRef`, which led to the page responding as intended.
+
+It is worth nothing that before these implementations, the backend was returning the updated offer correctly, however it was just the UI which wasn't reflecting the changes immediately and required a manual refresh. This is why calling markForCheck() explicitly notified Angular that the component's state has changed and that it should be checked during the next change detection cycle.
+
+### Frontend Component and Styling Generation
+
+Due to time constraints, ChatGPT was also used to create the `offerCard.html`, `offerCard.css`, `navbar.css`, `addOfferPage.ts`, `addOfferPage.html`, `addOfferPage.css`, and `offersPage.css`. Although these were mostly copy-pasted, then debugging of bugs, more work on them was done on my own, to make it look as professional as possible.
 
 It is worth noting that it is my first time working with plain HTML and CSS, as we usually used to use libraries for assignments within React. I did not opt for a library as I thought this would be simpler, instead of looking and researching for a library, but I was heavily mistaken.
