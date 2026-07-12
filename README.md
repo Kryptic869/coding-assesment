@@ -1,7 +1,7 @@
-# Coding-assesment
+# Coding-assessment
 
 This project is a full-stack offers management application developed as part of a technical assessment. The backend exposes a REST API built with Express and MongoDB, while the frontend is implemented in Angular.
-Undergoing this process involved first setting up both the frontend and the backend of the project, within the same directory.
+Undergoing this process involved first setting up both the frontend and the backend of the project within the same directory.
 
 ## Table of Contents
 
@@ -292,9 +292,9 @@ An offer may belong to more than one membership plan; therefore, the `plan` fiel
 
 ### Business Images vs Offer Images
 
-From the assessment brief and time taken to look around the app, it appeared that businesses share the same branding across multiple offers. To support this, each business stores default branding and gallery images which can be reused across multiple offers. Then, individual offers may optionally provide offer-specific promotional images and these are given display priority.
+From the assessment brief and time taken to look around the app, it appeared that businesses share the same branding across multiple offers. To support this, each business stores default branding and gallery images which can be reused across multiple offers. Then, individual offers may optionally provide offer-specific promotional images, and these are given display priority.
 
-For this assesment, seeded images are stored inside the backend's `public/images` directory and exposed as static assets through Express. The API returns image URLs, which the Angular frontend binds to the `src` attribute of image elements.
+For this assessment, seeded images are stored inside the backend's `public/images` directory and exposed as static assets through Express. The API returns image URLs, which the Angular frontend binds to the `src` attribute of image elements.
 
 When an offer does not contain a custom image, the frontend falls back to an image belonging to the associated business, or if that is not available, the frontend falls back to the business logo. In a production environment, these files would likely be stored through a cloud object-storage service or CDN rather than inside the application repository.
 
@@ -333,7 +333,7 @@ Several generated snippets were discarded or significantly rewritten when they d
 
 ChatGPT Plus was used for the generation of the seed data for the Mongoose Offer schema since in-memory data does not persist across restarts. This was done using the prompt below. As requested, three businesses and 7 offers matching the structure of the Mongoose schemas were created. The generated data was manually reviewed and modified to ensure consistency with the schema, realistic descriptions, valid categories, and relationships between businesses and offers. This significantly reduced the time required to produce realistic test data, which allowed me to focus on the implementation of the backend.
 
-These businesses and offers were created to demonstrate the application's functionality. Business descriptions, logos, gallery images, and promotional offer images were created specifically for this assesment to provide realistic sample data.
+These businesses and offers were created to demonstrate the application's functionality. Business descriptions, logos, gallery images, and promotional offer images were created specifically for this assessment to provide realistic sample data.
 
 > I am creating an offers application in Node.js, and I have created a schema for businesses and offers offered by those businesses using Mongoose. I would like you to generate seed data for the schemas. Invent 3 businesses and 7 offers.
 > OfferSchema:....
@@ -366,7 +366,7 @@ After going over the validation of the offers, looking side by side at the offer
 
 I understood that `body("plan")` and the newly learned `body("plan.*")` were used for different reasons. It allows the user to enforce validation rules on every element within an array, in this case for the `plan` array. However, if an array is empty, `plan.*` has nothing to validate, which is why the separate `.isArray({ min: 1 })` check is necessary. This was then also used for `category`, in order to make sure that all elements within the array are `string` and are one of the predefined categories. Without the wildcard `.*`, one would be able to insert numbers within the array, and any other type of string, which would not be accepted by the backend's enum. This is because standard `body()` checks only make sure that the value is an array, and does not check what is inside.
 
-This highlighted the difference between validating an array and validating each individual element of an array. This resulted in stronger server-side validation and prevented invalid values from reaching the database.
+This highlighted the difference between validating an array and validating each element of an array. This resulted in stronger server-side validation and prevented invalid values from reaching the database.
 
 > I have the schema for my offers application for the different plans an offer can be on. I assume that an offer can be available on different plans. Is there something that I am missing between the schema and the server-side validation? Schema:
 > plan:
