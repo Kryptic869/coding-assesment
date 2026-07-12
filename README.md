@@ -356,7 +356,7 @@ The generated assets include:
 
 These images are intended solely as demonstration content for the assessment and are not part of the application's functionality.
 
-insert screenshot here.
+<img width="1920" height="2822" alt="Image Creation" src="https://github.com/user-attachments/assets/671fc5c1-9c8b-4d4b-b033-d733a3ed9652" />
 
 Link to chat: [Chat Link](https://chatgpt.com/share/6a5406fb-fac0-83ed-a12d-75cf8083ef5c)
 
