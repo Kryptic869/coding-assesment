@@ -1,16 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
-import {
-  FormBuilder,
-  ReactiveFormsModule,
-  Validators
-} from '@angular/forms';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
+import {  FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink} from '@angular/router';
+import { finalize } from 'rxjs';
 
 import { Business } from '../../models/business.model';
 import { BusinessService } from '../../services/business.service';
 import { OfferService } from '../../services/offer.service';
-import { CreateOfferRequest } from '../../models/offer.model';
+
 
 @Component({
   selector: 'app-add-offer-page',
@@ -28,6 +25,7 @@ export class AddOfferPage implements OnInit {
   private readonly offerService = inject(OfferService);
   private readonly businessService = inject(BusinessService);
   private readonly router = inject(Router);
+  private readonly changeDetector = inject(ChangeDetectorRef);
 
   businesses: Business[] = [];
   isLoadingBusinesses = true;
@@ -98,39 +96,60 @@ export class AddOfferPage implements OnInit {
   });
 
   toggleArrayValue(
-  controlName: 'plan' | 'redeemableDays',
-  value: string,
-  event: Event
-): void {
-  const checkbox = event.target as HTMLInputElement;
-  const control = this.offerForm.controls[controlName];
-  const currentValues = control.value;
+    controlName: 'plan' | 'redeemableDays',
+    value: string,
+    event: Event
+  ): void {
+    const checkbox = event.target as HTMLInputElement;
+    const control = this.offerForm.controls[controlName];
+    const currentValues = control.value;
 
-  if (checkbox.checked) {
-    control.setValue([...currentValues, value]);
-  } else {
-    control.setValue(
-      currentValues.filter((item) => item !== value)
-    );
+    if (checkbox.checked) {
+      control.setValue([...currentValues, value]);
+    } else {
+      control.setValue(
+        currentValues.filter((item) => item !== value)
+      );
+    }
+
+    control.markAsTouched();
+    control.updateValueAndValidity();
+
+    this.changeDetector.markForCheck();
   }
-
-  control.markAsTouched();
-}
 
   ngOnInit(): void {
     this.loadBusinesses();
   }
 
   loadBusinesses(): void {
-    this.businessService.getBusinesses().subscribe({
-      next: (response) => {
-        this.businesses = response.data;
-        this.isLoadingBusinesses = false;
-      },
+    this.isLoadingBusinesses = true;
+    this.errorMessage = '';
+
+    this.changeDetector.markForCheck();
+
+    this.businessService
+      .getBusinesses()
+      .pipe(
+        finalize(() => {
+          this.isLoadingBusinesses = false;
+          this.changeDetector.markForCheck();
+        })
+      )
+      .subscribe({
+        next: (response) => {
+            this.businesses = response.data ?? [];
+
+            this.changeDetector.markForCheck();
+        },
+
       error: (error) => {
         console.error('Failed to load businesses:', error);
+
+        this.businesses = [];
         this.errorMessage = 'Unable to load businesses.';
-        this.isLoadingBusinesses = false;
+        
+        this.changeDetector.markForCheck();
       }
     });
   }
@@ -138,23 +157,34 @@ export class AddOfferPage implements OnInit {
   submitOffer(): void {
     if (this.offerForm.invalid) {
       this.offerForm.markAllAsTouched();
+      this.changeDetector.markForCheck();
       return;
     }
 
     this.isSubmitting = true;
     this.errorMessage = '';
 
-    this.offerService.createOffer(
-      this.offerForm.getRawValue()
-    ).subscribe({
-      next: () => {
-        this.router.navigate(['/offers']);
-      },
+    this.changeDetector.markForCheck();
+
+    this.offerService
+      .createOffer(this.offerForm.getRawValue())
+      .pipe(
+        finalize(() => {
+          this.isSubmitting = false;
+          this.changeDetector.markForCheck();
+        })
+      )
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/offers']);
+        },
+
       error: (error) => {
         console.error('Failed to create offer:', error);
+
         this.errorMessage = 'Unable to create the offer.';
-        this.isSubmitting = false;
-      }
+        this.changeDetector.markForCheck();
+    }
     });
   }
 }
