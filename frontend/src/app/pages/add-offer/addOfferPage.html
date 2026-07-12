@@ -19,7 +19,7 @@
   >
     <!-- Title -->
     <div class="form-group form-group--full">
-      <label for="title">Offer title</label>
+      <label for="title">Offer title *</label>
 
       <input
         id="title"
@@ -49,7 +49,7 @@
 
     <!-- Description -->
     <div class="form-group form-group--full">
-      <label for="description">Description</label>
+      <label for="description">Description *</label>
 
       <textarea
         id="description"
@@ -79,7 +79,7 @@
 
     <!-- Business -->
     <div class="form-group">
-      <label for="business">Business</label>
+      <label for="business">Business *</label>
 
       <select
         id="business"
@@ -135,7 +135,7 @@
 
     <!-- Discount -->
     <div class="form-group">
-      <label for="discount">Discount percentage</label>
+      <label for="discount">Discount percentage *</label>
 
       <input
         id="discount"
@@ -181,7 +181,7 @@
 
     <!-- Categories -->
     <div class="form-group form-group--full">
-      <label>Categories</label>
+      <label>Categories *</label>
 
       <div class="checkbox-group">
         @for (category of categories; track category) {
@@ -214,7 +214,7 @@
 
     <!-- Plans -->
     <div class="form-group">
-      <label>Available plans</label>
+      <label>Available plans *</label>
 
       <div class="checkbox-group">
         <label class="checkbox-option">
@@ -298,7 +298,7 @@
 
     <!-- Locations -->
     <div class="form-group form-group--full">
-      <label>Locations</label>
+      <label>Locations *</label>
 
       @if (!offerForm.controls.business.value) {
           <small>
@@ -382,7 +382,7 @@
     <!-- Terms and conditions -->
     <div class="form-group form-group--full">
       <label for="termsAndConditions">
-        Terms and conditions
+        Terms and conditions *
       </label>
 
       <textarea
