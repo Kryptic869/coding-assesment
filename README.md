@@ -3,6 +3,46 @@
 This project is a full-stack offers management application developed as part of a technical assessment. The backend exposes a REST API built with Express and MongoDB, while the frontend is implemented in Angular.
 Undergoing this process involved first setting up both the frontend and the backend of the project, within the same directory.
 
+## Table of Contents
+
+- [Frontend Development](#frontend-development)
+- [Frontend Architecture](#frontend-architecture)
+  - [Pages](#pages)
+  - [Components](#components)
+  - [Services](#services)
+  - [Models](#models)
+- [Backend & API Integration](#backend--api-integration)
+- [Backend Architecture](#backend-architecture)
+  - [Controllers](#controllers)
+  - [Routes](#routes)
+  - [Validation](#validation)
+  - [Models](#models-1)
+  - [Database](#database)
+  - [Seed](#seed-ai)
+- [Setup Instructions](#setup-instructions)
+  - [Requirements](#requirements)
+  - [Installation](#installation)
+- [Data Model Decisions](#data-model-decisions)
+  - [Offer Schema](#offer-schema)
+  - [Business Schema](#business-schema)
+  - [REST API](#rest-api)
+- [Assumptions and Trade-offs](#assumptions-and-trade-offs)
+  - [An Offer for Multiple Subscription Plans](#an-offer-for-multiple-subscription-plans)
+  - [Business Images vs Offer Images](#business-images-vs-offer-images)
+  - [Business Locations](#business-locations)
+  - [Toggle Within OfferCard Instead of OffersPage](#toggle-within-offercard-instead-of-offerspage)
+- [Future Work](#future-work)
+  - [Location Links for Businesses](#locations-links-for-businesses)
+  - [Linking Offer Categories with Business Categories](#linking-offer-categories-with-business-categories)
+  - [Expiry Date Allowance](#expiry-date-allowance)
+  - [Search, Filtering and Pagination for Offers](#search-filtering-and-pagination-for-offers)
+- [AI Tool Usage](#ai-tool-usage)
+  - [Seed Generation](#seed-generation)
+  - [Plan and Server-Side Schema Validation](#plan---server--schema-validation-question)
+  - [Learning Angular Concepts](#learning-angular-concepts)
+  - [Debugging Angular Change Detection](#debugging-angular-change-detection)
+  - [Frontend Component and Styling Generation](#frontend-component-and-styling-generation)
+
 ## Frontend Development
 
 Development of the frontend began with creating the TypeScript interfaces (models), followed by the application services responsible for communicating with the backend. Once the service layer was complete, the `offersPage` component (page) was developed to display the list of available offers. This was then followed by the implementation of the `offerCard` reusable component to have all offers within the same card layout and be reused per offer. The `offersPage` calls the GET endpoint through the offers service and stores the returned offers. Its template then renders one reusable `offerCard` component for each offer, passing the corresponding offer through the component's `@Input` property. Finally, the implementation of `addOfferPage` took place, which provides users with a form to create new offers.
