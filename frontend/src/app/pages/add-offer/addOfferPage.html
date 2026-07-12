@@ -1,0 +1,431 @@
+<section class="add-offer-page">
+  <header class="page-header">
+    <h1>Add Offer</h1>
+    <p>
+      Create and configure a new offer for the Cloudigo platform.
+    </p>
+  </header>
+
+  @if (errorMessage) {
+    <p class="error-message">
+      {{ errorMessage }}
+    </p>
+  }
+
+  <form
+    class="offer-form"
+    [formGroup]="offerForm"
+    (ngSubmit)="submitOffer()"
+  >
+    <!-- Title -->
+    <div class="form-group form-group--full">
+      <label for="title">Offer title</label>
+
+      <input
+        id="title"
+        type="text"
+        formControlName="title"
+        placeholder="e.g. 20% off gaming accessories"
+      />
+
+      @if (
+        offerForm.controls.title.touched &&
+        offerForm.controls.title.hasError('required')
+      ) {
+        <p class="field-error">
+          Offer title is required.
+        </p>
+      }
+
+      @if (
+        offerForm.controls.title.touched &&
+        offerForm.controls.title.hasError('maxlength')
+      ) {
+        <p class="field-error">
+          Offer title cannot exceed 100 characters.
+        </p>
+      }
+    </div>
+
+    <!-- Description -->
+    <div class="form-group form-group--full">
+      <label for="description">Description</label>
+
+      <textarea
+        id="description"
+        rows="5"
+        formControlName="description"
+        placeholder="Describe the benefit provided by this offer."
+      ></textarea>
+
+      @if (
+        offerForm.controls.description.touched &&
+        offerForm.controls.description.hasError('required')
+      ) {
+        <p class="field-error">
+          Offer description is required.
+        </p>
+      }
+
+      @if (
+        offerForm.controls.description.touched &&
+        offerForm.controls.description.hasError('maxlength')
+      ) {
+        <p class="field-error">
+          Offer description cannot exceed 500 characters.
+        </p>
+      }
+    </div>
+
+    <!-- Business -->
+    <div class="form-group">
+      <label for="business">Business</label>
+
+      <select
+        id="business"
+        formControlName="business"
+        [disabled]="isLoadingBusinesses"
+      >
+        <option value="">
+          @if (isLoadingBusinesses) {
+            Loading businesses...
+          } @else {
+            Select a business
+          }
+        </option>
+
+        @for (business of businesses; track business._id) {
+          <option [value]="business._id">
+            {{ business.name }}
+          </option>
+        }
+      </select>
+
+      @if (
+        offerForm.controls.business.touched &&
+        offerForm.controls.business.invalid
+      ) {
+        <p class="field-error">
+          Please select a business.
+        </p>
+      }
+    </div>
+
+    <!-- Amount of uses -->
+    <div class="form-group">
+      <label for="amountOfUses">Amount of uses</label>
+
+      <input
+        id="amountOfUses"
+        type="number"
+        min="1"
+        formControlName="amountOfUses"
+      />
+
+      @if (
+        offerForm.controls.amountOfUses.touched &&
+        offerForm.controls.amountOfUses.hasError('min')
+      ) {
+        <p class="field-error">
+          Amount of uses must be at least 1.
+        </p>
+      }
+    </div>
+
+    <!-- Discount -->
+    <div class="form-group">
+      <label for="discount">Discount percentage</label>
+
+      <input
+        id="discount"
+        type="number"
+        min="0"
+        max="100"
+        formControlName="discount"
+        placeholder="e.g. 20"
+      />
+
+      @if (
+        offerForm.controls.discount.touched &&
+        offerForm.controls.discount.hasError('required')
+      ) {
+        <p class="field-error">
+          Discount is required.
+        </p>
+      }
+
+      @if (
+        offerForm.controls.discount.touched &&
+        (
+          offerForm.controls.discount.hasError('min') ||
+          offerForm.controls.discount.hasError('max')
+        )
+      ) {
+        <p class="field-error">
+          Discount must be between 0 and 100.
+        </p>
+      }
+    </div>
+
+    <!-- Expiry date -->
+    <div class="form-group">
+      <label for="expiryDate">Expiry date</label>
+
+      <input
+        id="expiryDate"
+        type="date"
+        formControlName="expiryDate"
+      />
+
+      @if (
+        offerForm.controls.expiryDate.touched &&
+        offerForm.controls.expiryDate.invalid
+      ) {
+        <p class="field-error">
+          Expiry date is required.
+        </p>
+      }
+    </div>
+
+    <!-- Categories -->
+    <div class="form-group">
+      <label for="category">Categories</label>
+
+      <select
+        id="category"
+        multiple
+        formControlName="category"
+      >
+        <option value="food & beverage">
+          Food &amp; beverage
+        </option>
+
+        <option value="fashion & apparel">
+          Fashion &amp; apparel
+        </option>
+
+        <option value="electronics & gadgets">
+          Electronics &amp; gadgets
+        </option>
+
+        <option value="health & wellness">
+          Health &amp; wellness
+        </option>
+
+        <option value="entertainment">
+          Entertainment
+        </option>
+
+        <option value="travel & leisure">
+          Travel &amp; leisure
+        </option>
+      </select>
+
+      @if (
+        offerForm.controls.category.touched &&
+        offerForm.controls.category.invalid
+      ) {
+        <p class="field-error">
+          Select at least one category.
+        </p>
+      }
+    </div>
+
+    <!-- Plans -->
+    <div class="form-group">
+      <label>Available plans</label>
+
+      <div class="checkbox-group">
+        <label class="checkbox-option">
+          <input
+            type="checkbox"
+            value="basic"
+            [checked]="offerForm.controls.plan.value.includes('basic')"
+            (change)="toggleArrayValue('plan', 'basic', $event)"
+          />
+
+          Basic
+        </label>
+
+        <label class="checkbox-option">
+          <input
+            type="checkbox"
+            value="premium"
+            [checked]="offerForm.controls.plan.value.includes('premium')"
+            (change)="toggleArrayValue('plan', 'premium', $event)"
+          />
+
+          Premium
+        </label>
+
+        <label class="checkbox-option">
+          <input
+            type="checkbox"
+            value="enterprise"
+            [checked]="offerForm.controls.plan.value.includes('enterprise')"
+            (change)="toggleArrayValue('plan', 'enterprise', $event)"
+          />
+
+          Enterprise
+        </label>
+      </div>
+
+      @if (
+        offerForm.controls.plan.touched &&
+        offerForm.controls.plan.invalid
+      ) {
+        <p class="field-error">
+          Select at least one plan.
+        </p>
+      }
+    </div>
+
+    <!-- Redeemable days -->
+    <div class="form-group form-group--full">
+      <label>Redeemable days</label>
+
+      <div class="checkbox-group">
+        @for (
+          day of [
+            'monday',
+            'tuesday',
+            'wednesday',
+            'thursday',
+            'friday',
+            'saturday',
+            'sunday'
+          ];
+          track day
+        ) {
+          <label class="checkbox-option">
+            <input
+              type="checkbox"
+              [value]="day"
+              [checked]="
+                offerForm.controls.redeemableDays.value.includes(day)
+              "
+              (change)="
+                toggleArrayValue('redeemableDays', day, $event)
+              "
+            />
+
+            {{ day }}
+          </label>
+        }
+      </div>
+    </div>
+
+    <!-- Locations -->
+    <div class="form-group form-group--full">
+      <label for="locations">Locations</label>
+
+      <select
+        id="locations"
+        multiple
+        formControlName="locations"
+      >
+        @for (business of businesses; track business._id) {
+          <optgroup [label]="business.name">
+            @for (location of business.locations; track location) {
+              <option [value]="location">
+                {{ location }}
+              </option>
+            }
+          </optgroup>
+        }
+      </select>
+
+      @if (
+        offerForm.controls.locations.touched &&
+        offerForm.controls.locations.invalid
+      ) {
+        <p class="field-error">
+          Select at least one location.
+        </p>
+      }
+    </div>
+
+    <!-- Offer image -->
+    <div class="form-group form-group--full">
+      <label for="offerImage">Offer image URL</label>
+
+      <input
+        #offerImageInput
+        id="offerImage"
+        type="url"
+        placeholder="https://example.com/image.jpg"
+        (input)="
+          offerForm.controls.offerImages.setValue(
+            offerImageInput.value
+              ? [offerImageInput.value]
+              : []
+          )
+        "
+      />
+
+      <small>
+        A custom offer image is optional. When omitted, the business image
+        can be used as a fallback.
+      </small>
+    </div>
+
+    <!-- Status -->
+    <div class="form-group">
+      <label for="status">Initial status</label>
+
+      <select
+        id="status"
+        formControlName="status"
+      >
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+
+    <!-- Terms and conditions -->
+    <div class="form-group form-group--full">
+      <label for="termsAndConditions">
+        Terms and conditions
+      </label>
+
+      <textarea
+        id="termsAndConditions"
+        rows="5"
+        formControlName="termsAndConditions"
+        placeholder="Enter any conditions or restrictions that apply."
+      ></textarea>
+
+      @if (
+        offerForm.controls.termsAndConditions.touched &&
+        offerForm.controls.termsAndConditions.invalid
+      ) {
+        <p class="field-error">
+          Terms and conditions are required.
+        </p>
+      }
+    </div>
+
+    <!-- Form actions -->
+    <div class="form-actions">
+      <button
+        type="button"
+        class="secondary-button"
+        routerLink="/offers"
+        [disabled]="isSubmitting"
+      >
+        Cancel
+      </button>
+
+      <button
+        type="submit"
+        [disabled]="isSubmitting"
+      >
+        @if (isSubmitting) {
+          Creating offer...
+        } @else {
+          Create offer
+        }
+      </button>
+    </div>
+  </form>
+</section>
