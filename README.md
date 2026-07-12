@@ -313,6 +313,8 @@ Each `OfferCard` represents a single offer and already receives that offer throu
 Locations would allow for links which would redirect the user to the location via navigation applications.
 Locations could also be a new Schema on its own, which would then be shared amongst the different offers. This would require more work as some offers might be closed off for certain locations only.
 
+An all locations button to select all locations of a business.
+
 ### Linking Offer Categories with Business Categories
 
 When a business is adding a new category, only categories which the business has added beforehand are shown as an option; if they would like to add one, they would need to edit business settings.
