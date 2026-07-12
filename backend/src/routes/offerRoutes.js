@@ -8,7 +8,7 @@ import {
 
 import { offerValidationRules as createOfferValidator } from "../validators/offerValidators.js";
 
-import { validateRequest } from "../middleware/validateRequest.js";
+import { validateRequest } from "../validators/validateRequest.js";
 
 const router = express.Router();
 
