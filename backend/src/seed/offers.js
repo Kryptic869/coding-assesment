@@ -4,7 +4,7 @@ export default (businesses) => [
         description:
             "Enjoy a delicious Mediterranean dinner with a 20% discount on your total bill. Perfect for couples, families, and groups looking for a quality dining experience.",
         amountOfUses: 1,
-        businessId: businesses[0]._id,
+        business: businesses[0]._id,
         category: ["food & beverage"],
         discount: 20,
         plan: "premium",
@@ -33,7 +33,7 @@ export default (businesses) => [
         description:
             "Get a discounted weekend brunch experience including a selection of pastries, beverages, and Mediterranean-inspired dishes.",
         amountOfUses: 2,
-        businessId: businesses[0]._id,
+        business: businesses[0]._id,
         category: ["food & beverage"],
         discount: 15,
         plan: "basic",
@@ -58,7 +58,7 @@ export default (businesses) => [
         description:
             "Upgrade your smartphone and receive 25% off selected accessories including cases, chargers, and wireless headphones.",
         amountOfUses: 1,
-        businessId: businesses[1]._id,
+        business: businesses[1]._id,
         category: ["electronics & gadgets"],
         discount: 25,
         plan: "premium",
@@ -89,7 +89,7 @@ export default (businesses) => [
         description:
             "Save 30% when purchasing selected gaming accessories including keyboards, mice, and headsets.",
         amountOfUses: 1,
-        businessId: businesses[1]._id,
+        business: businesses[1]._id,
         category: ["electronics & gadgets"],
         discount: 30,
         plan: "enterprise",
@@ -115,7 +115,7 @@ export default (businesses) => [
         description:
             "Join ActiveLife Fitness Club with a 40% discount on your first three months of membership.",
         amountOfUses: 1,
-        businessId: businesses[2]._id,
+        business: businesses[2]._id,
         category: ["sports & fitness"],
         discount: 40,
         plan: "premium",
@@ -144,7 +144,7 @@ export default (businesses) => [
         description:
             "Receive a discounted personal training package with certified fitness coaches.",
         amountOfUses: 3,
-        businessId: businesses[2]._id,
+        business: businesses[2]._id,
         category: ["health & wellness"],
         discount: 35,
         plan: "basic",
@@ -170,7 +170,7 @@ export default (businesses) => [
         description:
             "Take part in a summer fitness challenge and receive exclusive membership benefits.",
         amountOfUses: 1,
-        businessId: businesses[2]._id,
+        business: businesses[2]._id,
         category: ["sports & fitness"],
         discount: 50,
         plan: "enterprise",
