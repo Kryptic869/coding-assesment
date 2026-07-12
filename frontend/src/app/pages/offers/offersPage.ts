@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, inject } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, inject } from '@angular/core';
 import { finalize } from 'rxjs';
 
 import { Offer } from '../../models/offer.model';
@@ -17,9 +17,10 @@ import { OfferCard } from '../../components/offer-card/offerCard';
 export class OffersPage implements OnInit {
   // Inject the OfferService to fetch offers from the backend
   private readonly offerService = inject(OfferService);
+  private readonly changeDetector = inject(ChangeDetectorRef);
 
   offers: Offer[] = [];
-  isLoading = true;
+  isLoading = false;
   errorMessage = '';
 
   // The ngOnInit lifecycle hook is called after the component is initialized
@@ -32,21 +33,33 @@ export class OffersPage implements OnInit {
     this.isLoading = true;
     this.errorMessage = '';
 
+    this.changeDetector.markForCheck();
+
     this.offerService
     .getOffers()
     .pipe(
         finalize(() => {
             this.isLoading = false;
+            this.changeDetector.markForCheck();
         })
     )
     .subscribe({
       next: (response) => {
-        this.offers = response.data;
+        this.offers = response.data ?? [];
+        this.changeDetector.markForCheck();
       },
       error: (error) => {
         console.error('Failed to load offers:', error);
 
-        this.errorMessage = 'Unable to load offers. Please try again.';
+        this.offers = [];
+
+        if(error.status === 304){
+          this.errorMessage = 'The server returned a cached response without offer data.';
+        } else {
+          this.errorMessage = 'Unable to load offers. Please try again.';
+        }
+        
+        this.changeDetector.markForCheck();
       }
     });
   }
