@@ -27,12 +27,12 @@ export const offerValidationRules = [
         .withMessage("Amount of uses must be a positive integer")
         .toInt(),
 
-    body("businessId")
+    body("business")
         .notEmpty()
-        .withMessage("Business ID is required")
+        .withMessage("Business is required")
         .bail()
         .isMongoId()
-        .withMessage("Business ID must be a valid MongoDB ID")
+        .withMessage("Business must be a valid MongoDB ID")
         .bail()
         .custom(async (value) => {
             const business = await Business.findById(value);

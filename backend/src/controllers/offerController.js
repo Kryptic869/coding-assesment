@@ -4,7 +4,7 @@ import Offer from "../models/Offer.js";
 const getOffers = async (req, res) => {
     try {
         const offers = await Offer.find()
-            .populate("businessId")
+            .populate("business")
             .sort({ createdAt: -1 });
         res.status(200).json({
             success: true,
@@ -41,7 +41,7 @@ const createOffer = async (req, res) => {
 const toggleOfferStatus = async (req, res) => {
     try {
         const offerId = req.params.id;
-        const offer = await Offer.findById(offerId);
+        const offer = await Offer.findById(offerId).populate("business");
 
         if (!offer) {
             return res.status(404).json({
