@@ -2,7 +2,7 @@
     <div class="offer-card__image-container">
         <img
             class="offer-card__image"
-            [src]="offer.offerImages?.[0] || offer.business.logoUrl"
+            [src]="offer.offerImages?.[0] || offer.business.images[0] || offer.business.logoUrl"
             alt = "{{ offer.title }}"
         />
 
