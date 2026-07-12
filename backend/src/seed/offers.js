@@ -45,7 +45,7 @@ export default (businesses) => [
             "Bugibba"
         ],
         offerImages: [
-            "https://example.com/images/brunch-offer.jpg"
+            
         ],
         expiryDate: new Date("2026-10-31"),
         status: "active",
@@ -75,8 +75,7 @@ export default (businesses) => [
             "Mosta"
         ],
         offerImages: [
-            "https://example.com/images/smartphone-upgrade.jpg",
-            "https://example.com/images/accessories.jpg"
+            
         ],
         expiryDate: new Date("2026-09-30"),
         status: "active",
@@ -157,7 +156,7 @@ export default (businesses) => [
             "St Julian's"
         ],
         offerImages: [
-            "https://example.com/images/personal-training.jpg"
+            
         ],
         expiryDate: new Date("2026-07-31"),
         status: "active",
@@ -187,7 +186,7 @@ export default (businesses) => [
             "Mellieha"
         ],
         offerImages: [
-            "https://example.com/images/summer-challenge.jpg"
+            
         ],
         expiryDate: new Date("2026-09-01"),
         status: "active",
