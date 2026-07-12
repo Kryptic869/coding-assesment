@@ -5,9 +5,9 @@ Undergoing this process involved first setting up both the frontend and the back
 
 ## Frontend Development
 
-Development of the frontend began with creating the TypeScript interfaces (models), followed by the application services responsible for communicating with the backend. Once the service layer was complete, the `offersPage` component (page) was developed to display the list of available offers. This was then followed by the implementation of the `offerCard` reusable component, to have all offers within the same card layout and be reused per offer. The `offersPage` calls the GET endpoint through the offers service and stores the returned offers. Its template then renders one reusable `offerCard` component for each offer, passing the corresponding offer through the component's `@Input` property. Finally, the implementation of `addOfferPage` took place, which provides users with a form to create new offers.
+Development of the frontend began with creating the TypeScript interfaces (models), followed by the application services responsible for communicating with the backend. Once the service layer was complete, the `offersPage` component (page) was developed to display the list of available offers. This was then followed by the implementation of the `offerCard` reusable component to have all offers within the same card layout and be reused per offer. The `offersPage` calls the GET endpoint through the offers service and stores the returned offers. Its template then renders one reusable `offerCard` component for each offer, passing the corresponding offer through the component's `@Input` property. Finally, the implementation of `addOfferPage` took place, which provides users with a form to create new offers.
 
-One notable difference from React that I have noticed is Angular's component structure. Each component consists of three separate files which are:
+One notable difference from React that I have noticed is Angular's component structure. Each component consists of three separate files, which are:
 
 - `.ts` files hold the logic
 - `.html` files hold the template
@@ -15,7 +15,7 @@ One notable difference from React that I have noticed is Angular's component str
 
 It is worth noting that ChatGPT Plus was used to help get the flow going for my first time in angular, asking it questions and exploring Angular functions. More at [Angular Help](#angular-help).
 
-Then once again with the aid of Artificial Intelligence (AI), I created the form needed to create new offers and a navigation bar. The navigation bar was created as a standalone reusable component, and was routed to be on top of the `main` parts of the application, so that only the routed pages underneath changed with updates.
+Then, once again with the aid of Artificial Intelligence (AI), I created the form needed to create new offers and a navigation bar. The navigation bar was created as a standalone reusable component and was routed to be on top of the `main` parts of the application, so that only the routed pages underneath changed with updates.
 
 Finally, a few hours were dedicated in improving the overall stability of the frontend, as well as making it look professional and nice for the eye.
 
@@ -54,8 +54,8 @@ Pages represent complete screens within the application and are responsible for 
 
 ### Components
 
-Components are reusable UI elementsd shared across the whole application.
-In this case, the `offerCard` component displays a single offer and is reused for every offer returned by the API. it also handles the toggling of the status without requiring the parent page to manage individual offer interactions.
+Components are reusable UI elements shared across the whole application.
+In this case, the `offerCard` component displays a single offer and is reused for every offer returned by the API. It also handles the toggling of the status without requiring the parent page to manage individual offer interactions.
 
 The navigation bar is also implemented as a reusable standalone component, allowing every routed page to share a consistent layout.
 
@@ -173,13 +173,13 @@ The `business` field references the Business schema, using its ObjectId. This al
 
 #### `category`
 
-This classifies the offer into predefined categories. This is not needed to be shown to the user when seeing the offer. This is only there for filtering and searching purposes.
+This classifies the offer into predefined categories. This does not need to be shown to the user when seeing the offer. This is only there for filtering and searching purposes.
 
 #### `discount`
 
 This stores the percentage discount applied by the offer.
 
-The consumer application prominently displays the value of the discount on each offer, therefore a dedicated discount field was included rather than just embedding the information inside the description.
+The consumer application prominently displays the value of the discount on each offer; therefore, a dedicated discount field was included rather than just embedding the information inside the description.
 
 #### `plan`
 
@@ -199,15 +199,15 @@ This stores URLs of optional images that are specific to an individual offer.
 
 #### `expiryDate`
 
-Specifies when an offer expires. Although not every offer displayed within the consumer application appeared to expire, I inferred that businesses should be able to create time-limited promotions (for example weekend, monthly or seasonal campaigns). Therefore the expiry date was made optional.
+Specifies when an offer expires. Although not every offer displayed within the consumer application appeared to expire, I inferred that businesses should be able to create time-limited promotions (for example: weekend, monthly or seasonal campaigns). Therefore, the expiry date was made optional.
 
 #### `status`
 
-This indicates whether the offer is active or inactive. Consumers should never see inactive offers. If an offer is active, it is shown to the user, whilst if its not, it does not come up on the users application. This can be used to temporarily hide offers without permanently deleting them.
+This indicates whether the offer is active or inactive. Consumers should never see inactive offers. If an offer is active, it is shown to the user, whilst if it's not, it does not come up on the user's application. This can be used to temporarily hide offers without permanently deleting them.
 
 #### `termsAndConditions`
 
-Stores additional restrictions and redemptions conditions that the users must follow.
+Stores additional restrictions and redemption conditions that the users must follow.
 
 ### Business Schema
 
@@ -238,7 +238,7 @@ This separates business-related information from offer-related information and r
 
 ### An offer for multiple subscription plans
 
-An offer may belong to more than one membership plan, therefore the `plan` field is stored as an array. This was done so that it reduces the duplication of similar or same offers.
+An offer may belong to more than one membership plan; therefore, the `plan` field is stored as an array. This was done so that it reduces the duplication of similar or same offers.
 
 ### Business Images vs Offer Images
 
@@ -320,16 +320,16 @@ Link to chat: [Chat Link](https://chatgpt.com/share/6a524ca1-38e8-83ed-9ab4-b134
 
 ### Learning Angular Concepts
 
-This was my first project developed using Angular and when getting to start the frontend, I used ChatGPT to help explain Angular concepts, component communication, routing, dependency injection and the framework's overalll architecture. I also asked for the differences between React and Angular.
+This was my first project developed using Angular, and when getting started with the frontend, I used ChatGPT to help explain Angular concepts, component communication, routing, dependency injection and the framework's overall architecture. I also asked for the differences between React and Angular.
 
 ### Debugging Angular Change Detection
 
 ChatGPT was also used to debug why, after pressing the change status button in the UI, it was not updating automatically. After multiple attempts,`finalize` and `ChangeDetectorRef` were recommended and implemented. After the implementation of `finalize`, the problem persisted; however it was later fixed with the introduction of `ChangeDetectorRef`, which led to the page responding as intended.
 
-It is worth nothing that before these implementations, the backend was returning the updated offer correctly, however it was just the UI which wasn't reflecting the changes immediately and required a manual refresh. This is why calling markForCheck() explicitly notified Angular that the component's state has changed and that it should be checked during the next change detection cycle.
+It is worth noting that before these implementations, the backend was returning the updated offer correctly; however, it was just the UI which wasn't reflecting the changes immediately and required a manual refresh. This is why calling markForCheck() explicitly notified Angular that the component's state has changed and that it should be checked during the next change detection cycle.
 
 ### Frontend Component and Styling Generation
 
-Due to time constraints, ChatGPT was also used to create the `offerCard.html`, `offerCard.css`, `navbar.css`, `addOfferPage.ts`, `addOfferPage.html`, `addOfferPage.css`, and `offersPage.css`. Although these were mostly copy-pasted, then debugging of bugs, more work on them was done on my own, to make it look as professional as possible.
+Due to time constraints, ChatGPT was also used to create the `offerCard.html`, `offerCard.css`, `navbar.css`, `addOfferPage.ts`, `addOfferPage.html`, `addOfferPage.css`, and `offersPage.css`. Although these were mostly copy-pasted, then debugging bugs, more work on them was done on my own, to make it look as professional as possible.
 
-It is worth noting that it is my first time working with plain HTML and CSS, as we usually used to use libraries for assignments within React. I did not opt for a library as I thought this would be simpler, instead of looking and researching for a library, but I was heavily mistaken.
+It is worth noting that it is my first time working with plain HTML and CSS, as we usually used to use libraries for assignments within React. I did not opt for a library as I thought this would be simpler; instead of looking and researching for a library, I was heavily mistaken.
