@@ -95,8 +95,32 @@ export class AddOfferPage implements OnInit {
     ]
   });
 
+  readonly categories = [
+    'food & beverage',
+    'fashion & apparel',
+    'electronics & gadgets',
+    'health & wellness',
+    'entertainment',
+    'travel & leisure'
+  ];
+
+  get selectedBusinessLocations(): string[] {
+    const selectedBusinessId = this.offerForm.controls.business.value;
+
+    const selectedBusiness = this.businesses.find(
+        businesses => businesses._id === selectedBusinessId
+    );
+
+    return selectedBusiness ? selectedBusiness.locations : [];
+  }
+
+  onBusinessChange(): void {
+    this.offerForm.controls.locations.setValue([]);
+    this.offerForm.controls.locations.markAsUntouched();
+  }
+
   toggleArrayValue(
-    controlName: 'plan' | 'redeemableDays',
+    controlName: 'plan' | 'redeemableDays' | 'locations' | 'category',
     value: string,
     event: Event
   ): void {
@@ -113,9 +137,8 @@ export class AddOfferPage implements OnInit {
     }
 
     control.markAsTouched();
+    control.markAsDirty();
     control.updateValueAndValidity();
-
-    this.changeDetector.markForCheck();
   }
 
   ngOnInit(): void {

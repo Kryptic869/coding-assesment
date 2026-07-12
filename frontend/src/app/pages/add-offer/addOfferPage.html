@@ -85,6 +85,7 @@
         id="business"
         formControlName="business"
         [disabled]="isLoadingBusinesses"
+        (change)="onBusinessChange()"
       >
         <option value="">
           @if (isLoadingBusinesses) {
@@ -188,38 +189,27 @@
     </div>
 
     <!-- Categories -->
-    <div class="form-group">
-      <label for="category">Categories</label>
+    <div class="form-group form-group--full">
+      <label>Categories</label>
 
-      <select
-        id="category"
-        multiple
-        formControlName="category"
-      >
-        <option value="food & beverage">
-          Food &amp; beverage
-        </option>
+      <div class="checkbox-group">
+        @for (category of categories; track category) {
+          <label class="checkbox-option">
+            <input
+              type="checkbox"
+              [value]="category"
+              [checked]="
+                offerForm.controls.category.value.includes(category)
+              "
+              (change)="
+                toggleArrayValue('category', category, $event)
+              "
+            />
 
-        <option value="fashion & apparel">
-          Fashion &amp; apparel
-        </option>
-
-        <option value="electronics & gadgets">
-          Electronics &amp; gadgets
-        </option>
-
-        <option value="health & wellness">
-          Health &amp; wellness
-        </option>
-
-        <option value="entertainment">
-          Entertainment
-        </option>
-
-        <option value="travel & leisure">
-          Travel &amp; leisure
-        </option>
-      </select>
+            {{ category }}
+          </label>
+        }
+      </div>
 
       @if (
         offerForm.controls.category.touched &&
@@ -317,23 +307,39 @@
 
     <!-- Locations -->
     <div class="form-group form-group--full">
-      <label for="locations">Locations</label>
+      <label>Locations</label>
 
-      <select
-        id="locations"
-        multiple
-        formControlName="locations"
-      >
-        @for (business of businesses; track business._id) {
-          <optgroup [label]="business.name">
-            @for (location of business.locations; track location) {
-              <option [value]="location">
+      @if (!offerForm.controls.business.value) {
+          <small>
+            Select a business before choosing locations. The available locations will be displayed based on the selected business.
+          </small>
+      } @else if (selectedBusinessLocations.length === 0) {
+          <small>
+            The selected business has no locations available.
+          </small>
+      } @else {
+          <div class="checkbox-group">
+            @for (
+              location of selectedBusinessLocations;
+              track location
+            ) {
+              <label class="checkbox-group">
+                <input
+                    type="checkbox"
+                    [value]="location"
+                    [checked]="
+                        offerForm.controls.locations.value.includes(location)
+                    "
+                    (change)="
+                        toggleArrayValue('locations', location, $event)
+                    "
+                    />
+
                 {{ location }}
-              </option>
+              </label>
             }
-          </optgroup>
-        }
-      </select>
+          </div>
+      }
 
       @if (
         offerForm.controls.locations.touched &&
