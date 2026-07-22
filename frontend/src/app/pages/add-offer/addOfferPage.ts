@@ -95,6 +95,16 @@ export class AddOfferPage implements OnInit {
     ]
   });
 
+  readonly redeemableDays = [
+    { label: 'Monday', value: 'monday' },
+    { label: 'Tuesday', value: 'tuesday' },
+    { label: 'Wednesday', value: 'wednesday' },
+    { label: 'Thursday', value: 'thursday' },
+    { label: 'Friday', value: 'friday' },
+    { label: 'Saturday', value: 'saturday' },
+    { label: 'Sunday', value: 'sunday' }
+  ]
+
   readonly categories = [
     'food & beverage',
     'fashion & apparel',

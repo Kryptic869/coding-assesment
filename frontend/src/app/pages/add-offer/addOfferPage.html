@@ -267,30 +267,22 @@
 
       <div class="checkbox-group">
         @for (
-          day of [
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday',
-            'Sunday'
-          ];
+          day of redeemableDays;
           track day
         ) {
           <label class="checkbox-option">
             <input
               type="checkbox"
-              [value]="day"
+              [value]="day.value"
               [checked]="
-                offerForm.controls.redeemableDays.value.includes(day)
+                offerForm.controls.redeemableDays.value.includes(day.value)
               "
               (change)="
-                toggleArrayValue('redeemableDays', day, $event)
+                toggleArrayValue('redeemableDays', day.value, $event)
               "
             />
 
-            {{ day }}
+            {{ day.label }}
           </label>
         }
       </div>
